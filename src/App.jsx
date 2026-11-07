@@ -212,3 +212,45 @@ function App() {
       <section className="welcome">
         <div><span className="eyebrow">YOUR PERSONAL ENGLISH COACH</span><h1>พร้อมอัปคะแนน<br/><em>ภาษาอังกฤษ</em> แล้วหรือยัง?</h1><p>ฝึกอย่างเป็นระบบ เข้าใจหลักภาษา และทำข้อสอบได้อย่างมั่นใจ</p><button className="primary-btn" onClick={startQuiz}>เริ่มฝึกทำข้อสอบ <ChevronRight size={17}/></button></div>
         <div className="welcome-art"><div
+             function Dashboard() {
+    return <>
+      <section className="welcome">
+        <div>
+          <span className="eyebrow">YOUR PERSONAL ENGLISH COACH</span>
+          <h1>พร้อมอัปคะแนน<br/><em>ภาษาอังกฤษ</em> แล้วหรือยัง?</h1>
+          <p>ฝึกอย่างเป็นระบบ เข้าใจหลักภาษา และทำข้อสอบได้อย่างมั่นใจ</p>
+          <button className="primary-btn" onClick={startQuiz}>
+            เริ่มฝึกทำข้อสอบ <ChevronRight size={17}/>
+          </button>
+        </div>
+        <div className="welcome-art">
+          <div className="art-card">
+            <Trophy size={36} className="text-amber-500" />
+            <div>
+              <b>พิชิตข้อสอบครูผู้ช่วย</b>
+              <small>แนวข้อสอบเน้นๆ อธิบายละเอียด</small>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      {/* ส่วนสถิติและเมนูด่วนด้านล่าง */}
+      <div className="stats-grid">
+        <div className="stat-card">
+          <Clock3 size={20} />
+          <div>
+            <span>แบบฝึกหัดที่ทำแล้ว</span>
+            <h3>{completed} ชุด</h3>
+          </div>
+        </div>
+        <div className="stat-card">
+          <BookOpen size={20} />
+          <div>
+            <span>บทเรียนทั้งหมด</span>
+            <h3>{lessons.length} บทเรียน</h3>
+          </div>
+        </div>
+      </div>
+    </>
+  }
+                            
