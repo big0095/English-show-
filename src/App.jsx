@@ -73,16 +73,86 @@ const questions = [
 ]
 
 const lessons = [
-  { title: 'Tenses ที่ออกสอบบ่อย', desc: 'Present, Past และ Future พร้อมคำบอกเวลา', tag: 'Grammar', time: '20 นาที', icon: BookOpen },
-  { title: 'Subject-Verb Agreement', desc: 'การเลือกกริยาให้สอดคล้องกับประธาน', tag: 'Grammar', time: '15 นาที', icon: Brain },
-  { title: 'Prepositions', desc: 'การใช้ in, on, at และคำบุพบทสำคัญ', tag: 'Grammar', time: '15 นาที', icon: BookMarked },
-  { title: 'Vocabulary for Teachers', desc: 'คำศัพท์เกี่ยวกับโรงเรียนและการศึกษา', tag: 'Vocabulary', time: '15 นาที', icon: GraduationCap },
-  { title: 'Reading Comprehension', desc: 'ฝึกอ่านจับใจความและหาความหมายจากบริบท', tag: 'Reading', time: '25 นาที', icon: ClipboardCheck },
-  { title: 'Everyday Conversation', desc: 'บทสนทนาและการเลือกคำตอบให้เหมาะสม', tag: 'Conversation', time: '15 นาที', icon: Sparkles }
+  { id: 'tenses', title: 'Tenses ที่ออกสอบบ่อย', desc: 'Present, Past และ Future พร้อมคำบอกเวลา', tag: 'Grammar', time: '20 นาที', icon: BookOpen },
+  { id: 'sva', title: 'Subject-Verb Agreement', desc: 'การเลือกกริยาให้สอดคล้องกับประธาน', tag: 'Grammar', time: '15 นาที', icon: Brain },
+  { id: 'prep', title: 'Prepositions', desc: 'การใช้ in, on, at และคำบุพบทสำคัญ', tag: 'Grammar', time: '15 นาที', icon: BookMarked },
+  { id: 'vocab', title: 'Vocabulary for Teachers', desc: 'คำศัพท์เกี่ยวกับโรงเรียนและการศึกษา', tag: 'Vocabulary', time: '15 นาที', icon: GraduationCap },
+  { id: 'reading-lesson', title: 'Reading Comprehension', desc: 'ฝึกอ่านจับใจความและหาความหมายจากบริบท', tag: 'Reading', time: '25 นาที', icon: ClipboardCheck },
+  { id: 'conv', title: 'Everyday Conversation', desc: 'บทสนทนาและการเลือกคำตอบให้เหมาะสม', tag: 'Conversation', time: '15 นาที', icon: Sparkles }
+]
+
+const readingStories = [
+  {
+    id: 'story-1',
+    title: 'The Little Hero (เด็กชายกับลูกแมว)',
+    level: 'LEVEL 01 · EASY',
+    time: '5–7 นาที',
+    image: '/images/reading-kitten-manga.png',
+    passage: [
+      'Tom is a kind and caring boy who lives near a green park. One rainy afternoon, as he was walking home from school, he heard a faint crying sound near a big tree.',
+      'He checked behind the bushes and found a little kitten. The poor kitten was hurt, cold, and shivering in the rain. Tom immediately wrapped the kitten in his jacket and ran to the nearby animal hospital.',
+      'The veterinarian examined the kitten, gave it medicine, and said, "You came just in time! You are a truly good boy. Animals need kind people like you." Tom smiled happily and decided to adopt the kitten, naming it Lucky.'
+    ],
+    summary: 'ทอมเป็นเด็กใจดี พบลูกแมวบาดเจ็บและตากฝนอยู่ใต้ต้นไม้ จึงรีบใช้เสื้อแจ็คเก็ตห่อตัวและพาไปโรงพยาบาลสัตว์ สัตวแพทย์ได้รักษาและเอ่ยชมทอม สุดท้ายทอมรับเลี้ยงลูกแมวและตั้งชื่อให้มันว่า "ลักกี้"',
+    vocab: [
+      { word: 'kind', meaning: 'ใจดี / มีน้ำใจ' },
+      { word: 'faint', meaning: 'แผ่วเบา (เสียง)' },
+      { word: 'shivering', meaning: 'สั่นสะท้าน (จากความหนาว)' },
+      { word: 'immediately', meaning: 'ในทันทีทันใด' },
+      { word: 'veterinarian (vet)', meaning: 'สัตวแพทย์' },
+      { word: 'adopt', meaning: 'นำมาเลี้ยง / รับเลี้ยง' }
+    ],
+    questions: [
+      {
+        id: 'r1_1',
+        q: '1. What is the main idea of the story?',
+        options: [
+          'Tom plays in the rain after school.',
+          'Tom finds a injured kitten and kindly saves it.',
+          'The veterinarian opens a new clinic.',
+          'A kitten runs away from its home.'
+        ],
+        answer: 1,
+        why: 'ใจความหลักคือ Tom พบลูกแมวที่บาดเจ็บและช่วยชีวิตมันไว้อย่างมีน้ำใจ'
+      },
+      {
+        id: 'r1_2',
+        q: '2. Why did Tom wrap the kitten in his jacket?',
+        options: [
+          'Because the kitten was hungry.',
+          'Because he wanted to hide the kitten.',
+          'Because the kitten was hurt, cold, and shivering.',
+          'Because his jacket was dirty.'
+        ],
+        answer: 2,
+        why: 'ในบทอ่านระบุว่า "The poor kitten was hurt, cold, and shivering in the rain" เขาจึงใช้แจ็คเก็ตห่อมันไว้'
+      },
+      {
+        id: 'r1_3',
+        q: '3. What does the word "immediately" mean in the text?',
+        options: ['Very slowly', 'Right away without delay', 'Carefully', 'Secretly'],
+        answer: 1,
+        why: 'immediately หมายถึง ในทันทีทันใด โดยไม่รอช้า (Right away without delay)'
+      },
+      {
+        id: 'r1_4',
+        q: '4. What happened at the end of the story?',
+        options: [
+          'Tom left the kitten at the park.',
+          'The kitten ran away into the forest.',
+          'Tom named the kitten Lucky and adopted it.',
+          'Tom sold the kitten to his friend.'
+        ],
+        answer: 2,
+        why: 'ตอนจบของเรื่องระบุว่า Tom ตัดสินใจรับเลี้ยงลูกแมวและตั้งชื่อให้ว่า Lucky'
+      }
+    ]
+  }
 ]
 
 function App() {
   const [page, setPage] = useState('dashboard')
+  const [selectedLessonId, setSelectedLessonId] = useState('tenses')
   const [mobileOpen, setMobileOpen] = useState(false)
   const [quizIndex, setQuizIndex] = useState(0)
   const [selected, setSelected] = useState({})
@@ -90,8 +160,11 @@ function App() {
   const [completed, setCompleted] = useState(() => Number(localStorage.getItem('eem-completed') || 0))
   const [search, setSearch] = useState('')
   const [filter, setFilter] = useState('ทั้งหมด')
+
+  const [activeStoryId, setActiveStoryId] = useState('story-1')
   const [readingAnswers, setReadingAnswers] = useState({})
   const [readingSubmitted, setReadingSubmitted] = useState(false)
+  const activeStory = useMemo(() => readingStories.find(s => s.id === activeStoryId) || readingStories[0], [activeStoryId])
 
   const score = useMemo(() => questions.reduce((n, q) => n + (selected[q.id] === q.answer ? 1 : 0), 0), [selected])
   const navItems = [
@@ -125,7 +198,7 @@ function App() {
     return <aside className={`sidebar ${mobileOpen ? 'open' : ''}`}>
       <div className="brand"><div className="brand-icon"><GraduationCap size={24}/></div><div><b>ENGLISH EXAM</b><span>MASTER · TEACHER</span></div></div>
       <div className="nav-label">เมนูหลัก</div>
-      <nav>{navItems.map(([id, label, Icon]) => <button key={id} className={`nav-item ${page === id ? 'active' : ''}`} onClick={() => {setPage(id);setMobileOpen(false)}}><Icon size={18}/><span>{label}</span>{id === 'practice' && <i>ใหม่</i>}</button>)}</nav>
+      <nav>{navItems.map(([id, label, Icon]) => <button key={id} className={`nav-item ${page === id || (page === 'lesson' && id === 'lessons') ? 'active' : ''}`} onClick={() => {setPage(id);setMobileOpen(false)}}><Icon size={18}/><span>{label}</span>{id === 'practice' && <i>ใหม่</i>}</button>)}</nav>
       <div className="sidebar-bottom"><div className="goal-card"><Target size={19}/><b>เป้าหมายของคุณ</b><p>ฝึกวันละ 30 นาที เพื่อเพิ่มความมั่นใจก่อนสอบ</p><div className="goal-line"><span/></div><small>เริ่มต้นสร้างวินัยวันนี้</small></div><button className="nav-item"><Settings size={18}/> ตั้งค่า</button></div>
     </aside>
   }
@@ -149,59 +222,107 @@ function App() {
       </div>
       <div className="content-grid">
         <section className="panel"><div className="panel-head"><div><h2>เส้นทางการเรียน</h2><p>เนื้อหาที่ควรฝึกสำหรับการสอบ</p></div><button className="text-btn" onClick={() => setPage('lessons')}>ดูทั้งหมด <ChevronRight size={15}/></button></div>
-          <div className="learning-list">{lessons.slice(0,4).map((l,i)=><button className="learning-row" key={l.title} onClick={()=>setPage(l.tag==='Reading'?'reading':'lessons')}><div className={`lesson-icon color-${i}`}><l.icon size={19}/></div><div className="lesson-info"><b>{l.title}</b><span>{l.desc}</span></div><small>{l.time}</small><ChevronRight size={17}/></button>)}</div>
+          <div className="learning-list">{lessons.slice(0,4).map((l,i)=><button className="learning-row" key={l.title} onClick={()=>{if(l.tag==='Reading'){setPage('reading')}else{setSelectedLessonId(l.id);setPage('lesson')}}}><div className={`lesson-icon color-${i}`}><l.icon size={19}/></div><div className="lesson-info"><b>{l.title}</b><span>{l.desc}</span></div><small>{l.time}</small><ChevronRight size={17}/></button>)}</div>
         </section>
         <section className="panel daily-panel"><div className="daily-icon"><Clock3 size={22}/></div><span className="eyebrow">TODAY'S CHALLENGE</span><h2>ฝึกวันละนิด<br/>พิชิตข้อสอบ</h2><p>เริ่มจากแบบฝึกหัด 8 ข้อ เพื่อทบทวน Grammar, Vocabulary และ Conversation</p><button className="dark-btn" onClick={startQuiz}>ทำแบบฝึกหัดวันนี้ <ChevronRight size={16}/></button><div className="daily-decoration">✦</div></section>
       </div>
-      <div className="note"><Sparkles size={18}/><div><b>คำแนะนำจาก English Coach</b><p>อย่าเน้นจำเฉลยเพียงอย่างเดียว ให้สังเกตเหตุผลและหลักไวยากรณ์ที่อยู่เบื้องหลังคำตอบทุกข้อ</p></div></div>
     </>
   }
 
   function Lessons() {
     return <><div className="page-title"><span className="eyebrow">LEARNING LIBRARY</span><h1>คลังบทเรียน</h1><p>เลือกหัวข้อที่ต้องการทบทวน แล้วพัฒนาความแม่นยำทีละเรื่อง</p></div>
       <div className="toolbar"><div className="searchbox"><Search size={18}/><input placeholder="ค้นหาบทเรียน..." value={search} onChange={e=>setSearch(e.target.value)}/></div><div className="filters">{['ทั้งหมด','Grammar','Vocabulary','Reading','Conversation'].map(f=><button key={f} className={filter===f?'selected':''} onClick={()=>setFilter(f)}>{f}</button>)}</div></div>
-      <div className="lesson-grid">{filteredLessons.map((l,i)=><article className="lesson-card" key={l.title}><div className={`lesson-icon large color-${i}`}><l.icon size={22}/></div><span className="category">{l.tag}</span><h3>{l.title}</h3><p>{l.desc}</p><div className="lesson-card-foot"><span><Clock3 size={14}/> {l.time}</span><button onClick={()=>setPage(l.tag==='Reading'?'reading':'lesson')}>เริ่มเรียน <ChevronRight size={15}/></button></div></article>)}</div>
+      <div className="lesson-grid">{filteredLessons.map((l,i)=><article className="lesson-card" key={l.title}><div className={`lesson-icon large color-${i}`}><l.icon size={22}/></div><span className="category">{l.tag}</span><h3>{l.title}</h3><p>{l.desc}</p><div className="lesson-card-foot"><span><Clock3 size={14}/> {l.time}</span><button onClick={()=>{if(l.tag==='Reading'){setPage('reading')}else{setSelectedLessonId(l.id);setPage('lesson')}}}>เริ่มเรียน <ChevronRight size={15}/></button></div></article>)}</div>
     </>
   }
 
   function LessonDetail() {
-    return <><button className="back-btn" onClick={()=>setPage('lessons')}>← กลับไปคลังบทเรียน</button><div className="page-title"><span className="eyebrow">GRAMMAR FOUNDATION</span><h1>Present Simple Tense</h1><p>ใช้พูดถึงกิจวัตร ความจริงทั่วไป และสิ่งที่เกิดขึ้นเป็นประจำ</p></div><div className="panel lesson-content"><h2>1. โครงสร้างประโยค</h2><div className="formula">Subject + V.1 (เติม s/es เมื่อประธานเป็น He / She / It)</div><h3>ตัวอย่าง</h3><p><b>She teaches English every day.</b><br/><span className="translation">เธอสอนภาษาอังกฤษทุกวัน</span></p><p><b>They play football after school.</b><br/><span className="translation">พวกเขาเล่นฟุตบอลหลังเลิกเรียน</span></p><h3>2. คำบอกเวลาที่พบบ่อย</h3><div className="vocab-chips"><span>always = เสมอ</span><span>usually = โดยปกติ</span><span>often = บ่อย ๆ</span><span>every day = ทุกวัน</span><span>sometimes = บางครั้ง</span></div><div className="exam-tip"><b>จุดที่มักออกสอบ</b><p>ถ้าประธานเป็นเอกพจน์บุรุษที่ 3 (He, She, It หรือคำนามเอกพจน์) ในประโยคบอกเล่า ต้องเติม s/es ที่กริยา</p></div><button className="primary-btn" onClick={startQuiz}>ลองทำแบบฝึกหัด <ChevronRight size={17}/></button></div></>
+    const content = {
+      tenses: {
+        title: 'Tenses ที่ออกสอบบ่อย (Present, Past, Future)',
+        sub: 'สรุปโครงสร้างและคำบอกเวลาที่มักออกข้อสอบบ่อยที่สุด',
+        sections: [
+          { h: '1. Present Simple Tense', f: 'Subject + V.1 (เติม s/es เมื่อประธานเอกพจน์บุรุษที่ 3)', desc: 'ใช้กับความจริงทั่วไปและกิจวัตรประจำวัน คำบอกเวลา: always, usually, every day' },
+          { h: '2. Past Simple Tense', f: 'Subject + V.2', desc: 'ใช้กับเหตุการณ์ที่เกิดขึ้นและจบลงแล้วในอดีต คำบอกเวลา: yesterday, last night, ...ago' },
+          { h: '3. Future Simple Tense', f: 'Subject + will + V.1', desc: 'ใช้กับเหตุการณ์ที่จะเกิดขึ้นในอนาคต คำบอกเวลา: tomorrow, next week, soon' }
+        ]
+      },
+      sva: {
+        title: 'Subject-Verb Agreement (ความสอดคล้องของประธานและกริยา)',
+        sub: 'หลักการเลือกใช้คำกริยาให้ถูกต้องตามพจน์ของประธาน',
+        sections: [
+          { h: '1. ประธานเอกพจน์และพหูพจน์', f: 'ประธานเอกพจน์ + กริยาเติม s/es | ประธานพหูพจน์ + กริยาช่อง 1 รูปปกติ', desc: 'เช่น He works hard. / They work hard.' },
+          { h: '2. คำเชื่อม as well as, with, together with', f: 'ยึดประธานตัวหน้าเป็นหลัก', desc: 'เช่น The teacher, along with the students, is ready.' }
+        ]
+      },
+      prep: {
+        title: 'Prepositions (คำบุพบทบอกเวลาและสถานที่)',
+        sub: 'การใช้ in, on, at ให้ถูกต้องแม่นยำ',
+        sections: [
+          { h: '1. Prepositions of Time (เวลา)', f: 'at + เวลาเจาะจง | on + วัน/วันที่ | in + เดือน/ปี/ช่วงเวลา', desc: 'เช่น at 9:00 AM, on Monday, in 2026, in the morning' },
+          { h: '2. Prepositions of Place (สถานที่)', f: 'at + จุดพิกัดเฉพาะ | on + พื้นผิว/ถนน | in + พื้นที่ปิด/เมืองใหญ่', desc: 'เช่น at the door, on the table, in Bangkok' }
+        ]
+      },
+      vocab: {
+        title: 'Vocabulary for Teachers (คำศัพท์หมวดการศึกษา)',
+        sub: 'คลังคำศัพท์ที่พบบ่อยในการสอบบรรจุครูผู้ช่วย',
+        sections: [
+          { h: 'คำศัพท์สำคัญ', f: 'Curriculum (หลักสูตร), Evaluation (การประเมิน), Instruction (การสอน), Outstanding (โดดเด่น)', desc: 'ควรจำคำศัพท์ที่เป็นทางการและเกี่ยวข้องกับการบริหารจัดการเรียนรู้ในโรงเรียน' }
+        ]
+      },
+      conv: {
+        title: 'Everyday Conversation (บทสนทนาในสถานการณ์ต่างๆ)',
+        sub: 'การเลือกตอบคำถามในสถานการณ์จำลองอย่างสุภาพและเหมาะสม',
+        sections: [
+          { h: 'รูปแบบการตอบรับ', f: 'Thank you → You’re welcome. / My pleasure.', desc: 'ระวังการเลือกสำนวนที่ใช้ในบริบททางการและไม่เป็นทางการให้ถูกต้อง' }
+        ]
+      }
+    }[selectedLessonId] || { title: 'บทเรียน', sub: '', sections: [] }
+
+    return <><button className="back-btn" onClick={()=>setPage('lessons')}>← กลับไปคลังบทเรียน</button>
+      <div className="page-title"><span className="eyebrow">LESSON DETAIL</span><h1>{content.title}</h1><p>{content.sub}</p></div>
+      <div className="panel lesson-content">
+        {content.sections.map((sec, i) => (
+          <div key={i} style={{marginBottom: '20px'}}>
+            <h2>{sec.h}</h2>
+            <div className="formula">{sec.f}</div>
+            <p style={{marginTop: '10px'}}>{sec.desc}</p>
+          </div>
+        ))}
+        <button className="primary-btn" onClick={startQuiz} style={{marginTop: '15px'}}>ลองทำแบบฝึกหัด <ChevronRight size={17}/></button>
+      </div>
+    </>
   }
 
   function Reading() {
-    const readingQuestions = [
-      { q: 'What is the main idea of the passage?', options: ['Tom likes cats very much.', 'Tom found a kitten and helped it.', 'The vet works at a school.', 'The kitten ran away.'], answer: 1, why: 'ใจความสำคัญคือ Tom พบลูกแมวและช่วยเหลือมัน เพราะเหตุการณ์หลักของเรื่องกล่าวถึงการช่วยลูกแมวที่บาดเจ็บ' },
-      { q: 'Why did Tom take the kitten to the animal hospital?', options: ['It was hungry.', 'It was lost.', 'It was hurt and cold.', 'It was noisy.'], answer: 2, why: 'คำใบ้คือ “hurt and cold” แปลว่า บาดเจ็บและหนาว จึงต้องพาไปโรงพยาบาลสัตว์' },
-      { q: 'The word “kind” is closest in meaning to _____.', options: ['angry', 'helpful and caring', 'lazy', 'afraid'], answer: 1, why: 'kind หมายถึง ใจดี มีน้ำใจ ซึ่งสอดคล้องกับการที่ Tom ช่วยลูกแมว' }
-    ]
-    const readingScore = readingQuestions.filter((q,i)=>readingAnswers[i]===q.answer).length
+    const readingScore = activeStory.questions.filter(q => readingAnswers[q.id] === q.answer).length
     return <>
-      <div className="page-title reading-title"><span className="eyebrow">READ · UNDERSTAND · ANSWER</span><h1>Reading Manga <span>📖</span></h1><p>อ่านเรื่องสั้นผ่านภาพการ์ตูน ฝึกจับใจความ พร้อมเก็บคีย์เวิร์ดที่ออกสอบบ่อย</p></div>
-      <div className="reading-banner"><div><span className="reading-level">READING STORY · LEVEL 01</span><h2>The Little Hero</h2><p>เรื่องราวของเด็กชายผู้มีน้ำใจ ช่วยเหลือลูกแมวตัวน้อย</p><div className="reading-meta"><span>⏱ 5–7 นาที</span><span>✦ 3 คำถาม</span><span>🎯 Main Idea & Vocabulary</span></div></div><div className="reading-banner-art">📚</div></div>
+      <div className="page-title reading-title"><span className="eyebrow">READING COMPREHENSION MODULE</span><h1>Reading Manga <span>📖</span></h1><p>อ่านเรื่องสั้นมังงะแบบต่อเนื่อง จับใจความบทอ่านอย่างเป็นระบบ พร้อมเฉลยและเหตุผล</p></div>
+      <div className="reading-banner"><div><span className="reading-level">{activeStory.level}</span><h2>{activeStory.title}</h2><p>บทอ่านต่อเนื่องความยาว {activeStory.passage.length} ย่อหน้า พร้อมภาพประกอบและคีย์เวิร์ด</p><div className="reading-meta"><span>⏱ {activeStory.time}</span><span>✦ {activeStory.questions.length} คำถาม</span><span>🎯 Reading Comprehension</span></div></div><div className="reading-banner-art">📚</div></div>
       <div className="reading-layout">
         <section className="panel reading-story">
-          <div className="reading-section-head"><div><span className="eyebrow">MANGA STORY</span><h2>Read the story</h2></div><span className="story-tag">A kind action</span></div>
-          <img className="manga-illustration" src="/images/reading-kitten-manga.png" alt="ภาพการ์ตูนมังงะเด็กชายช่วยลูกแมว" />
-          <div className="passage-text"><p><b>Tom is a kind boy.</b> One day, he found a little kitten on the street. The kitten was hurt and cold. Tom quickly took it to the animal hospital.</p><p>The vet said, “You are a good boy. Animals need kind people like you.” Tom smiled happily.</p></div>
-          <div className="passage-translation"><b>สรุปใจความภาษาไทย</b><p>ทอมพบลูกแมวตัวหนึ่งที่บาดเจ็บและหนาว เขาจึงรีบพามันไปโรงพยาบาลสัตว์ สัตวแพทย์ชมว่าทอมเป็นเด็กดีและมีน้ำใจ</p></div>
-          <div className="story-vocab"><h3>🧩 Vocabulary to remember</h3><div className="vocab-row"><b>kind</b><span>ใจดี / มีน้ำใจ</span></div><div className="vocab-row"><b>kitten</b><span>ลูกแมว</span></div><div className="vocab-row"><b>hurt</b><span>บาดเจ็บ</span></div><div className="vocab-row"><b>animal hospital</b><span>โรงพยาบาลสัตว์</span></div></div>
+          <div className="reading-section-head"><div><span className="eyebrow">MANGA PASSAGE</span><h2>เนื้อเรื่องบทอ่าน (Passage)</h2></div><span className="story-tag">{activeStory.title}</span></div>
+          <img className="manga-illustration" src={activeStory.image} alt="ภาพการ์ตูนประกอบเรื่อง" />
+          <div className="passage-text">{activeStory.passage.map((p, idx)=><p key={idx}><b>[ย่อหน้าที่ {idx+1}]</b> {p}</p>)}</div>
+          <div className="passage-translation"><b>สรุปเรื่องราว (Thai Summary)</b><p>{activeStory.summary}</p></div>
+          <div className="story-vocab"><h3>🧩 คำศัพท์น่ารู้ประจำบทอ่าน (Vocabulary)</h3>{activeStory.vocab.map((v, i)=><div className="vocab-row" key={i}><b>{v.word}</b><span>{v.meaning}</span></div>)}</div>
         </section>
         <aside className="reading-side">
-          <div className="panel keyword-panel"><div className="keyword-title"><span>💡</span><div><b>KEYWORDS ที่ต้องรู้</b><small>คำใบ้ช่วยจับใจความ</small></div></div><div className="keyword-item"><b>One day</b><span>วันหนึ่ง · เปิดเหตุการณ์ในอดีต</span></div><div className="keyword-item"><b>because</b><span>เพราะว่า · บอกเหตุผล</span></div><div className="keyword-item"><b>quickly</b><span>อย่างรวดเร็ว · บอกลักษณะการกระทำ</span></div><div className="keyword-item"><b>kind</b><span>ใจดี · คำคุณศัพท์บอกลักษณะ</span></div><div className="keyword-memory">จำไว้: อ่านคำถามก่อน แล้วกลับไปหาประโยคที่เป็นหลักฐานในเรื่อง</div></div>
-          <div className="panel reading-coach"><div className="coach-mascot">🐱</div><b>Reading Coach</b><p>อย่าแปลทุกคำ! ลองหาคำสำคัญและประโยคที่ตอบคำถามให้เจอก่อน</p></div>
+          <div className="panel keyword-panel"><div className="keyword-title"><span>💡</span><div><b>เทคนิคการอ่าน (Reading Tip)</b><small>ค้นหาคำตอบในบทอ่าน</small></div></div><div className="keyword-item"><b>1. อ่านโจทย์ก่อน</b><span>ดูว่าโจทย์ถาม ใคร ทำอะไร ที่ไหน หรือทำไม</span></div><div className="keyword-item"><b>2. สแกนคีย์เวิร์ด</b><span>มองหาคำศัพท์สำคัญในย่อหน้าเพื่อหาตำแหน่งคำตอบ</span></div></div>
+          <div className="panel reading-coach"><div className="coach-mascot">🐱</div><b>Reading Coach</b><p>อ่านคำถามทางด้านล่าง แล้วนำตัวเลือกมาเปรียบเทียบกับเนื้อเรื่องได้เลย!</p></div>
         </aside>
       </div>
-      <section className="panel reading-quiz"><div className="reading-section-head"><div><span className="eyebrow">CHECK YOUR UNDERSTANDING</span><h2>ตอบคำถามจากเรื่องที่อ่าน</h2></div><span className="story-tag">3 Questions</span></div>
-        {readingQuestions.map((q,i)=><div className="reading-question" key={i}><h3><span>{i+1}</span>{q.q}</h3><div className="reading-options">{q.options.map((o,j)=><button key={j} className={`${readingAnswers[i]===j?'chosen':''} ${readingSubmitted&&j===q.answer?'right':''} ${readingSubmitted&&readingAnswers[i]===j&&j!==q.answer?'wrong':''}`} disabled={readingSubmitted} onClick={()=>setReadingAnswers(a=>({...a,[i]:j}))}><b>{String.fromCharCode(65+j)}</b>{o}</button>)}</div>{readingSubmitted&&<div className="reading-explanation"><b>{readingAnswers[i]===q.answer?'✓ ถูกต้อง!':'✕ คำตอบที่ถูกคือ '+String.fromCharCode(65+q.answer)}</b><p>{q.why}</p></div>}</div>)}
-        <div className="reading-submit">{!readingSubmitted?<button className="primary-btn" disabled={Object.keys(readingAnswers).length!==readingQuestions.length} onClick={()=>setReadingSubmitted(true)}>ตรวจคำตอบ <CheckCircle2 size={17}/></button>:<><div className="reading-result">คะแนนของคุณ <b>{readingScore}/3</b></div><button className="secondary-btn" onClick={()=>{setReadingAnswers({});setReadingSubmitted(false)}}><RotateCcw size={15}/> ลองอีกครั้ง</button></>}</div>
+      <section className="panel reading-quiz"><div className="reading-section-head"><div><span className="eyebrow">QUESTIONS FOR THIS PASSAGE</span><h2>โจทย์คำถามวัดความเข้าใจ ({activeStory.questions.length} ข้อ)</h2></div><span className="story-tag">Reading Questions</span></div>
+        {activeStory.questions.map((q)=><div className="reading-question" key={q.id}><h3>{q.q}</h3><div className="reading-options">{q.options.map((o, j)=><button key={j} className={`${readingAnswers[q.id]===j?'chosen':''} ${readingSubmitted&&j===q.answer?'right':''} ${readingSubmitted&&readingAnswers[q.id]===j&&j!==q.answer?'wrong':''}`} disabled={readingSubmitted} onClick={()=>setReadingAnswers(a=>({...a,[q.id]:j}))}><b>{String.fromCharCode(65+j)}</b>{o}</button>)}</div>{readingSubmitted&&<div className="reading-explanation"><b>{readingAnswers[q.id]===q.answer?'✓ ถูกต้อง!':'✕ คำตอบที่ถูกคือ '+String.fromCharCode(65+q.answer)}</b><p>{q.why}</p></div>}</div>)}
+        <div className="reading-submit">{!readingSubmitted?<button className="primary-btn" disabled={Object.keys(readingAnswers).length!==activeStory.questions.length} onClick={()=>setReadingSubmitted(true)}>ตรวจคำตอบ Reading <CheckCircle2 size={17}/></button>:<><div className="reading-result">คะแนน Reading ของคุณ <b>{readingScore}/{activeStory.questions.length}</b></div><button className="secondary-btn" onClick={()=>{setReadingAnswers({});setReadingSubmitted(false)}}><RotateCcw size={15}/> ลองอีกครั้ง</button></>}</div>
       </section>
     </>
   }
 
   function Practice() {
-    if (submitted) return <div className="result-wrap"><div className="result-icon"><Trophy size={34}/></div><span className="eyebrow">PRACTICE COMPLETED</span><h1>ทำแบบฝึกหัดเสร็จแล้ว!</h1><div className="score-number">{score}<small> / {questions.length}</small></div><p className="score-caption">คุณตอบถูก {Math.round(score/questions.length*100)}% ของชุดฝึกนี้</p><div className="result-actions"><button className="primary-btn" onClick={resetQuiz}><RotateCcw size={17}/> ทำอีกครั้ง</button><button className="secondary-btn" onClick={()=>setPage('progress')}>ดูความก้าวหน้า</button></div><div className="panel review-panel"><h2>ทบทวนคำตอบ</h2>{questions.map((q,i)=><div className="review-row" key={q.id}><div className="review-top"><b>ข้อ {i+1}. {q.question}</b>{selected[q.id]===q.answer?<CheckCircle2 className="correct"/>:<XCircle className="incorrect"/>}</div><p>คำตอบที่ถูก: <b>{q.options[q.answer]}</b></p><small>{q.explanation}</small></div>)}</div></div>
+    if (submitted) return <div className="result-wrap"><div className="result-icon"><Trophy size={34}/></div><span className="eyebrow">PRACTICE COMPLETED</span><h1>ทำแบบฝึกหัดเสร็จแล้ว!</h1><div className="score-number">{score}<small> / {questions.length}</small></div><p className="score-caption">คุณตอบถูก {Math.round(score/questions.length*100)}% ของชุดฝึกไวยากรณ์นี้</p><div className="result-actions"><button className="primary-btn" onClick={resetQuiz}><RotateCcw size={17}/> ทำอีกครั้ง</button><button className="secondary-btn" onClick={()=>setPage('progress')}>ดูความก้าวหน้า</button></div><div className="panel review-panel"><h2>ทบทวนเฉลยไวยากรณ์</h2>{questions.map((q,i)=><div className="review-row" key={q.id}><div className="review-top"><b>ข้อ {i+1}. {q.question}</b>{selected[q.id]===q.answer?<CheckCircle2 className="correct"/>:<XCircle className="incorrect"/>}</div><p>คำตอบที่ถูก: <b>{q.options[q.answer]}</b></p><small>{q.explanation}</small></div>)}</div></div>
     const q = current
-    return <><div className="page-title"><span className="eyebrow">PRACTICE MODE · ชุดพื้นฐาน</span><h1>ฝึกทำข้อสอบ</h1><p>อ่านโจทย์ให้ครบ เลือกคำตอบที่ถูกต้องที่สุดเพียงข้อเดียว</p></div><div className="quiz-layout"><section className="panel quiz-panel"><div className="quiz-top"><span className="question-count">QUESTION {quizIndex+1} <small>/ {questions.length}</small></span><span className="level-pill">{q.level} · {q.topic}</span></div><div className="progress-track"><span style={{width:`${(quizIndex+1)/questions.length*100}%`}}/></div><h2 className="question-text">{q.question}</h2><div className="options">{q.options.map((o,i)=><button key={o} className={`option ${selected[q.id]===i?'chosen':''}`} onClick={()=>setSelected(s=>({...s,[q.id]:i}))}><span className="option-letter">{String.fromCharCode(65+i)}</span>{o}{selected[q.id]===i&&<CheckCircle2 size={18}/>}</button>)}</div><div className="quiz-footer"><button className="secondary-btn" disabled={quizIndex===0} onClick={()=>setQuizIndex(i=>i-1)}>ย้อนกลับ</button>{quizIndex<questions.length-1?<button className="primary-btn" disabled={selected[q.id]===undefined} onClick={()=>setQuizIndex(i=>i+1)}>ข้อต่อไป <ChevronRight size={17}/></button>:<button className="primary-btn" disabled={selected[q.id]===undefined} onClick={finishQuiz}>ส่งคำตอบ <CheckCircle2 size={17}/></button>}</div></section><aside className="panel quiz-aside"><div className="aside-symbol"><Brain size={23}/></div><h3>เทคนิคทำข้อสอบ</h3><p>สังเกตคำบอกเวลาและประธานของประโยคก่อนเลือกคำตอบ</p><div className="aside-divider"/><b>ความคืบหน้า</b><div className="question-dots">{questions.map((x,i)=><button key={x.id} className={`${i===quizIndex?'current':''} ${selected[x.id]!==undefined?'answered':''}`} onClick={()=>setQuizIndex(i)}>{i+1}</button>)}</div><small>ตอบแล้ว {Object.keys(selected).length} จาก {questions.length} ข้อ</small></aside></div></>
+    return <><div className="page-title"><span className="eyebrow">GRAMMAR & VOCABULARY MODE</span><h1>ฝึกทำข้อสอบไวยากรณ์ ({questions.length} ข้อ)</h1><p>เลือกคำตอบที่ถูกต้องที่สุดตามหลักโครงสร้างภาษาอังกฤษ</p></div><div className="quiz-layout"><section className="panel quiz-panel"><div className="quiz-top"><span className="question-count">QUESTION {quizIndex+1} <small>/ {questions.length}</small></span><span className="level-pill">{q.level} · {q.topic}</span></div><div className="progress-track"><span style={{width:`${(quizIndex+1)/questions.length*100}%`}}/></div><h2 className="question-text">{q.question}</h2><div className="options">{q.options.map((o,i)=><button key={o} className={`option ${selected[q.id]===i?'chosen':''}`} onClick={()=>setSelected(s=>({...s,[q.id]:i}))}><span className="option-letter">{String.fromCharCode(65+i)}</span>{o}{selected[q.id]===i&&<CheckCircle2 size={18}/>}</button>)}</div><div className="quiz-footer"><button className="secondary-btn" disabled={quizIndex===0} onClick={()=>setQuizIndex(i=>i-1)}>ย้อนกลับ</button>{quizIndex<questions.length-1?<button className="primary-btn" disabled={selected[q.id]===undefined} onClick={()=>setQuizIndex(i=>i+1)}>ข้อต่อไป <ChevronRight size={17}/></button>:<button className="primary-btn" disabled={selected[q.id]===undefined} onClick={finishQuiz}>ส่งคำตอบ <CheckCircle2 size={17}/></button>}</div></section><aside className="panel quiz-aside"><div className="aside-symbol"><Brain size={23}/></div><h3>เทคนิคทำข้อสอบ</h3><p>{q.tip}</p><div className="aside-divider"/><b>รายการข้อสอบ</b><div className="question-dots">{questions.map((x,i)=><button key={x.id} className={`${i===quizIndex?'current':''} ${selected[x.id]!==undefined?'answered':''}`} onClick={()=>setQuizIndex(i)}>{i+1}</button>)}</div><small>ตอบแล้ว {Object.keys(selected).length} จาก {questions.length} ข้อ</small></aside></div></>
   }
 
   function Mock() {
@@ -209,10 +330,10 @@ function App() {
   }
 
   function Progress() {
-    return <><div className="page-title"><span className="eyebrow">YOUR PERFORMANCE</span><h1>ความก้าวหน้าของคุณ</h1><p>ดูพัฒนาการและวางแผนการฝึกครั้งต่อไป</p></div><div className="stats-grid"><div className="stat-card"><div className="stat-icon purple"><ClipboardCheck/></div><span>ชุดฝึกที่ทำแล้ว</span><strong>{completed}</strong></div><div className="stat-card"><div className="stat-icon blue"><BookOpen/></div><span>บทเรียนในระบบ</span><strong>6</strong></div><div className="stat-card"><div className="stat-icon green"><Target/></div><span>เป้าหมายต่อวัน</span><strong>30 <small>นาที</small></strong></div><div className="stat-card"><div className="stat-icon orange"><Trophy/></div><span>ระดับการเตรียมสอบ</span><strong>กำลังฝึก</strong></div></div><div className="panel progress-advice"><h2>แผนฝึกที่แนะนำ</h2><ol><li>ทบทวน Tenses และ Subject-Verb Agreement</li><li>ฝึกคำศัพท์เกี่ยวกับการศึกษา วันละ 10 คำ</li><li>อ่านบทความภาษาอังกฤษสั้น ๆ แล้วสรุปใจความ</li><li>ทำข้อสอบแบบจับเวลาและจดข้อผิดพลาด</li></ol><button className="primary-btn" onClick={startQuiz}>ฝึกต่อเลย <ChevronRight size={17}/></button></div></>
+    return <><div className="page-title"><span className="eyebrow">YOUR PERFORMANCE</span><h1>ความก้าวหน้าของคุณ</h1><p>ดูพัฒนาการและวางแผนการฝึกครั้งต่อไป</p></div><div className="stats-grid"><div className="stat-card"><div className="stat-icon purple"><ClipboardCheck/></div><span>ชุดฝึกที่ทำแล้ว</span><strong>{completed}</strong></div><div className="stat-card"><div className="stat-icon blue"><BookOpen/></div><span>บทเรียนในระบบ</span><strong>6</strong></div><div className="stat-card"><div className="stat-icon green"><Target/></div><span>เป้าหมายต่อวัน</span><strong>30 <small>นาที</small></strong></div><div className="stat-card"><div className="stat-icon orange"><Trophy/></div><span>ระดับการเตรียมสอบ</span><strong>กำลังฝึก</strong></div></div><div className="panel progress-advice"><h2>แผนฝึกที่แนะนำ</h2><ol><li>ทบทวน Tenses และ Subject-Verb Agreement ในหมวด Grammar</li><li>ฝึกอ่านบทความต่อเนื่องในหมวด Reading Manga</li><li>ฝึกคำศัพท์เกี่ยวกับการศึกษา วันละ 10 คำ</li><li>ทำข้อสอบแบบจับเวลาและจดข้อผิดพลาด</li></ol><button className="primary-btn" onClick={startQuiz}>ฝึกต่อเลย <ChevronRight size={17}/></button></div></>
   }
 
-  return <div className="app-shell"><Sidebar/><main className="main"><Header/><div className="page-content">{page==='dashboard'?<Dashboard/>:page==='lessons'?<Lessons/>:page==='lesson'?<LessonDetail/>:page==='reading'?<Reading/>:page==='practice'?<Practice/>:page==='mock'?<Mock/>:<Progress/>}</div><footer>ENGLISH EXAM MASTER <span>·</span> Teacher Assistant Preparation <span>·</span> เวอร์ชันเริ่มต้น</footer></main>{mobileOpen&&<button className="mobile-scrim" onClick={()=>setMobileOpen(false)} aria-label="ปิดเมนู"><X/></button>}</div>
+  return <div className="app-shell"><Sidebar/><main className="main"><Header/><div className="page-content">{page==='dashboard'?<Dashboard/>:page==='lessons'?<Lessons/>:page==='lesson'?<LessonDetail/>:page==='reading'?<Reading/>:page==='practice'?<Practice/>:page==='mock'?<Mock/>:<Progress/>}</div><footer>ENGLISH EXAM MASTER <span>·</span> Teacher Assistant Preparation</footer></main>{mobileOpen&&<button className="mobile-scrim" onClick={()=>setMobileOpen(false)} aria-label="ปิดเมนู"><X/></button>}</div>
 }
 
 export default App
