@@ -1,409 +1,485 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ENGLISH EXAM MASTER - คลังข้อสอบภาษาอังกฤษ</title>
-  <style>
-    :root {
-      --sidebar-width: 260px;
-      --bg-color: #f8fafc;
-      --card-bg: #ffffff;
-      --primary-color: #3b82f6;
-      --text-main: #1e293b;
-      --text-muted: #64748b;
-      --border-color: #e2e8f0;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-
-    body {
-      background-color: var(--bg-color);
-      color: var(--text-main);
-      display: flex;
-      min-height: 100vh;
-    }
-
-    /* --- Sidebar Styles --- */
-    aside {
-      width: var(--sidebar-width);
-      background: var(--card-bg);
-      border-right: 1px solid var(--border-color);
-      display: flex;
-      flex-direction: column;
-      position: fixed;
-      height: 100vh;
-      top: 0;
-      left: 0;
-      z-index: 10;
-    }
-
-    .brand-container {
-      padding: 24px 20px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      border-bottom: 1px solid var(--border-color);
-    }
-
-    .brand-icon {
-      background: var(--primary-color);
-      color: white;
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-    }
-
-    .brand-title h2 {
-      font-size: 15px;
-      color: var(--text-main);
-      font-weight: 700;
-      letter-spacing: 0.5px;
-    }
-
-    .brand-title span {
-      font-size: 11px;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .nav-section {
-      padding: 20px 15px;
-      flex-grow: 1;
-      overflow-y: auto;
-    }
-
-    .nav-label {
-      font-size: 11px;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 10px;
-      padding-left: 10px;
-      font-weight: 600;
-    }
-
-    .nav-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 12px 14px;
-      color: var(--text-muted);
-      text-decoration: none;
-      border-radius: 8px;
-      margin-bottom: 4px;
-      font-size: 14px;
-      font-weight: 500;
-      transition: all 0.2s ease;
-    }
-
-    .nav-item:hover, .nav-item.active {
-      background: #eff6ff;
-      color: var(--primary-color);
-    }
-
-    /* --- Main Content Layout --- */
-    main {
-      margin-left: var(--sidebar-width);
-      flex-grow: 1;
-      padding: 30px;
-      max-width: calc(100vw - var(--sidebar-width));
-    }
-
-    .header-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 30px;
-      background: var(--card-bg);
-      padding: 15px 25px;
-      border-radius: 12px;
-      border: 1px solid var(--border-color);
-    }
-
-    .breadcrumb {
-      font-size: 13px;
-      color: var(--text-muted);
-    }
-
-    .breadcrumb span {
-      color: var(--text-main);
-      font-weight: 600;
-    }
-
-    /* --- Content Section --- */
-    .section-title {
-      font-size: 22px;
-      font-weight: 700;
-      color: var(--text-main);
-      margin-bottom: 8px;
-    }
-
-    .section-desc {
-      font-size: 14px;
-      color: var(--text-muted);
-      margin-bottom: 25px;
-    }
-
-    /* Filter Badges / Buttons */
-    .filter-tabs {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 25px;
-      flex-wrap: wrap;
-    }
-
-    .filter-btn {
-      padding: 8px 16px;
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 20px;
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-muted);
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .filter-btn:hover, .filter-btn.active {
-      background: var(--primary-color);
-      color: white;
-      border-color: var(--primary-color);
-    }
-
-    /* --- Quiz Card & Layout Grid --- */
-    #quiz-container {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .question-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-left: 5px solid var(--primary-color);
-      padding: 24px;
-      border-radius: 12px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
-      transition: transform 0.2s;
-    }
-
-    .question-card:hover {
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    }
-
-    .passage-box {
-      background: #eff6ff;
-      border: 1px solid #bfdbfe;
-      padding: 16px;
-      border-radius: 8px;
-      margin-bottom: 18px;
-      border-left: 5px solid #2563eb;
-      font-size: 14px;
-      color: #1e40af;
-      line-height: 1.6;
-    }
-
-    .question-title {
-      font-size: 16px;
-      font-weight: 600;
-      color: var(--text-main);
-      margin-bottom: 16px;
-      line-height: 1.5;
-    }
-
-    .options-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .options-list label {
-      display: flex;
-      align-items: center;
-      padding: 10px 14px;
-      background: #f8fafc;
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 14px;
-      transition: all 0.2s;
-    }
-
-    .options-list label:hover {
-      background: #f1f5f9;
-      border-color: #cbd5e1;
-    }
-
-    .options-list input {
-      margin-right: 12px;
-      accent-color: var(--primary-color);
-      transform: scale(1.1);
-    }
-
-    .no-result {
-      text-align: center;
-      padding: 40px;
-      color: var(--text-muted);
-      background: var(--card-bg);
-      border-radius: 12px;
-      border: 1px solid var(--border-color);
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Short Stories & Reading Quiz</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Sarabun', sans-serif;
+        }
+    </style>
 </head>
-<body>
+<body class="bg-slate-50 min-h-screen text-slate-800 flex flex-col">
 
-  <!-- Sidebar เมนูด้านซ้ายตามต้นฉบับ -->
-  <aside>
-    <div class="brand-container">
-      <div class="brand-icon">📚</div>
-      <div class="brand-title">
-        <h2>ENGLISH EXAM</h2>
-        <span>Master Teacher</span>
-      </div>
-    </div>
-    <div class="nav-section">
-      <div class="nav-label">เมนูหลัก</div>
-      <a href="#" class="nav-item">🏠 หน้าหลัก</a>
-      <a href="#" class="nav-item active">📖 บทเรียน & คลังข้อสอบ</a>
-      <a href="#" class="nav-item">✍️ ฝึกทำข้อสอบ</a>
-      <a href="#" class="nav-item">📊 จำลองสนามสอบ</a>
-      <a href="#" class="nav-item">📈 ความก้าวหน้า</a>
-    </div>
-  </aside>
+    <!-- Header -->
+    <header class="bg-indigo-600 text-white shadow-md sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="showStoryList()">
+                <div class="bg-white text-indigo-600 p-2 rounded-lg font-bold text-xl shadow">
+                    <i data-lucide="book-open-check"></i>
+                </div>
+                <div>
+                    <h1 class="text-lg font-bold leading-none">English Short Stories</h1>
+                    <p class="text-xs text-indigo-200">ฝึกอ่านภาษาอังกฤษ & ทำข้อสอบ</p>
+                </div>
+            </div>
+            <button id="nav-list-btn" onclick="showStoryList()" class="bg-indigo-500 hover:bg-indigo-700 text-white text-sm px-3 py-1.5 rounded-lg flex items-center space-x-1 transition">
+                <i data-lucide="list"></i>
+                <span>เลือกบทเรียน</span>
+            </button>
+        </div>
+    </header>
 
-  <!-- เนื้อหาหลักด้านขวา -->
-  <main>
-    <div class="header-bar">
-      <div class="breadcrumb">เตรียมสอบครูผู้ช่วย &gt; <span>คลังข้อสอบทั้งหมด</span></div>
-      <div style="font-size: 13px; font-weight: 600; color: var(--primary-color);">ระบบออนไลน์ ⚡</div>
-    </div>
+    <!-- Main Container -->
+    <main class="flex-grow max-w-5xl w-full mx-auto p-4 md:p-6">
+        
+        <!-- Story Selection Screen -->
+        <div id="story-selection-screen" class="space-y-6">
+            <div class="text-center space-y-2">
+                <h2 class="text-2xl font-bold text-slate-800">เลือกเรื่องสั้นที่ต้องการอ่าน</h2>
+                <p class="text-slate-500 text-sm">อ่านเรื่องสั้นสไตล์ Daily Short Stories ทบทวนคำศัพท์ และทดสอบความเข้าใจ</p>
+            </div>
 
-    <div class="section-title">คลังข้อสอบภาษาอังกฤษ</div>
-    <div class="section-desc">เลือกหมวดหมู่หัวข้อที่ต้องการฝึกฝน แล้วพัฒนาความแม่นยำทีละเรื่อง</div>
+            <!-- Story Grid -->
+            <div id="story-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Dynamic Content -->
+            </div>
+        </div>
 
-    <!-- ปุ่มกรองหมวดหมู่ข้อสอบ -->
-    <div class="filter-tabs" id="filterTabs">
-      <button class="filter-btn active" onclick="filterQuestions('ALL', this)">ทั้งหมด</button>
-      <button class="filter-btn" onclick="filterQuestions('Preposition', this)">Preposition</button>
-      <button class="filter-btn" onclick="filterQuestions('If-Clause', this)">If-Clause</button>
-      <button class="filter-btn" onclick="filterQuestions('Passive Voice', this)">Passive Voice</button>
-      <button class="filter-btn" onclick="filterQuestions('Tense', this)">Tenses</button>
-      <button class="filter-btn" onclick="filterQuestions('Vocabulary', this)">Vocabulary</button>
-      <button class="filter-btn" onclick="filterQuestions('Conversation', this)">Conversation</button>
-      <button class="filter-btn" onclick="filterQuestions('Reading', this)">Reading</button>
-    </div>
+        <!-- Story Reading & Quiz Screen -->
+        <div id="story-detail-screen" class="hidden space-y-6">
+            <!-- Navigation Back Button -->
+            <button onclick="showStoryList()" class="inline-flex items-center space-x-1 text-indigo-600 hover:text-indigo-800 text-sm font-semibold transition mb-2">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                <span>กลับไปหน้าเลือกเรื่อง</span>
+            </button>
 
-    <!-- พื้นที่แสดงข้อสอบ -->
-    <div id="quiz-container"></div>
-  </main>
+            <!-- Tab Buttons -->
+            <div class="flex border-b border-slate-200 bg-white rounded-t-xl overflow-hidden shadow-sm">
+                <button id="tab-read-btn" onclick="switchTab('read')" class="flex-1 py-3 px-4 text-center font-semibold text-indigo-600 border-b-2 border-indigo-600 flex items-center justify-center space-x-2 transition">
+                    <i data-lucide="book-open" class="w-4 h-4"></i>
+                    <span>บทอ่าน (Story)</span>
+                </button>
+                <button id="tab-quiz-btn" onclick="switchTab('quiz')" class="flex-1 py-3 px-4 text-center font-semibold text-slate-500 hover:text-indigo-600 flex items-center justify-center space-x-2 transition">
+                    <i data-lucide="help-circle" class="w-4 h-4"></i>
+                    <span>แบบทดสอบ (Quiz)</span>
+                </button>
+            </div>
 
-<script>
-  function _(level, subCat, category, question, options, answer, explanation, passage = "", passageId = 0) {
-    return { level, subCategory: subCat, category, question, options, answer, explanation, passage, passageId };
-  }
+            <!-- Tab 1: Reading View -->
+            <div id="tab-read" class="bg-white rounded-b-xl shadow-md p-6 space-y-6">
+                <div>
+                    <span id="story-category-tag" class="text-xs font-semibold px-2.5 py-1 bg-indigo-50 text-indigo-600 rounded-full">Set 1</span>
+                    <h2 id="story-title" class="text-2xl font-bold text-slate-800 mt-2">Title</h2>
+                </div>
 
-  const Pu = 1;
-  const ts = 2;
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- English Text -->
+                    <div class="bg-indigo-50/50 p-4 rounded-xl border border-indigo-100">
+                        <h3 class="text-xs font-bold text-indigo-500 uppercase tracking-wider mb-2 flex items-center gap-1">
+                            <i data-lucide="globe" class="w-3.5 h-3.5"></i> English
+                        </h3>
+                        <p id="story-english" class="text-slate-700 leading-relaxed font-sans text-base whitespace-pre-line"></p>
+                    </div>
+                    <!-- Thai Text -->
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+                            <i data-lucide="languages" class="w-3.5 h-3.5"></i> แปลไทย
+                        </h3>
+                        <p id="story-thai" class="text-slate-600 leading-relaxed text-sm whitespace-pre-line"></p>
+                    </div>
+                </div>
 
-  // ฐานข้อมูลข้อสอบ
-  const examDatabase = [
-    _("ม.3", "Preposition", "Grammar", "Nok usually goes to school ______ 7:00 AM.", ["at", "in", "on", "by"], 0, "ใช้ at กับเวลาที่เป็นจุดชัดเจนบนนาฬิกา"),
-    _("ม.3", "Preposition", "Grammar", "The cat is sleeping ______ the table.", ["under", "between", "among", "into"], 0, "under แปลว่า อยู่ใต้/ล่าง"),
-    _("ม.3", "Preposition", "Grammar", "We always have lunch together ______ noon.", ["at", "on", "in", "for"], 0, "ใช้คำว่า at noon"),
+                <!-- Vocabulary List -->
+                <div class="space-y-3 pt-4 border-t border-slate-100">
+                    <h3 class="font-bold text-slate-800 flex items-center gap-2">
+                        <i data-lucide="bookmark" class="w-4 h-4 text-indigo-600"></i>
+                        <span>คำศัพท์น่ารู้ (Vocabulary)</span>
+                    </h3>
+                    <div id="story-vocab" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+                        <!-- Dynamic Vocab -->
+                    </div>
+                </div>
 
-    _("ม.3", "If-Clause", "Grammar", "If it rains tomorrow, we ______ at home.", ["will stay", "stayed", "would stay", "had stayed"], 0, "If-Clause Type 1: If + Present Simple, Future Simple (will + V.1)"),
-    _("ม.3", "If-Clause", "Grammar", "If I ______ rich, I would travel around the world.", ["were", "am", "will be", "have been"], 0, "If-Clause Type 2: สมมติในปัจจุบันใช้ If + Past Simple (ใช้ were เสมอกับทุกประธาน)"),
-    _("ม.3", "If-Clause", "Grammar", "She would pass the exam if she ______ harder.", ["studied", "studies", "study", "will study"], 0, "If-Clause Type 2: would + V.1 + if + Past Simple (V.2)"),
+                <!-- Action Button to Quiz -->
+                <div class="pt-4 text-center">
+                    <button onclick="switchTab('quiz')" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-6 py-2.5 rounded-lg shadow-md transition inline-flex items-center space-x-2">
+                        <span>เริ่มทำแบบทดสอบ</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
 
-    _("ม.3", "Passive Voice", "Grammar", "This English book ______ by a famous author last year.", ["was written", "wrote", "is writing", "writes"], 0, "Passive Voice ในอดีต: Subject + was/were + V.3"),
-    _("ม.3", "Tense", "Grammar", "They ______ English for five years.", ["have studied", "study", "studying", "studied"], 0, "Present Perfect: เหตุการณ์ที่เกิดตั้งแต่อดีตต่อเนื่องถึงปัจจุบัน (for + ระยะเวลา)"),
+            <!-- Tab 2: Quiz View -->
+            <div id="tab-quiz" class="hidden bg-white rounded-b-xl shadow-md p-6 space-y-6">
+                <div class="flex justify-between items-center pb-4 border-b border-slate-100">
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-800">แบบทดสอบความเข้าใจ</h3>
+                        <p class="text-xs text-slate-500">ตอบคำถาม 3 ข้อเพื่อทดสอบความเข้าใจบทอ่าน</p>
+                    </div>
+                    <span id="quiz-score-badge" class="hidden px-3 py-1 bg-green-100 text-green-700 rounded-full font-bold text-sm"></span>
+                </div>
 
-    _("ม.3", "Vocabulary", "Meaning", "The weather is very ______ today. Please take an umbrella.", ["rainy", "sunny", "dry", "windy"], 0, "บริบทบอกให้พกร่ม คำตอบคือ rainy (ฝนตก)"),
-    _("ม.3", "Vocabulary", "Synonym", "What is the synonym of the word 'huge'?", ["enormous", "tiny", "narrow", "short"], 0, "huge แปลว่าใหญ่โต มีความหมายเดียวกับ enormous"),
+                <!-- Quiz Questions Form -->
+                <form id="quiz-form" class="space-y-6">
+                    <div id="quiz-container" class="space-y-6">
+                        <!-- Dynamic Quiz Questions -->
+                    </div>
 
-    _("ม.3", "Conversation", "Daily Life", "A: How do you do?\nB: ______", ["How do you do?", "I'm fine, thank you.", "Nice to meet you.", "Good morning."], 0, "ทักทายแบบเป็นทางการ How do you do? ต้องตอบกลับด้วย How do you do?"),
+                    <div class="flex justify-between items-center pt-4 border-t border-slate-100">
+                        <button type="button" onclick="resetQuiz()" class="px-4 py-2 border border-slate-300 rounded-lg text-slate-600 text-sm font-semibold hover:bg-slate-50 transition">
+                            ทำใหม่ (Reset)
+                        </button>
+                        <button type="button" onclick="submitQuiz()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-lg text-sm font-semibold shadow transition">
+                            ส่งคำตอบ (Submit)
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
 
-    _("ม.3", "Reading", "Details", "What time does Nok wake up everyday?", ["5:30 AM", "6:30 AM", "7:00 AM", "8:00 AM"], 0, "อ้างอิงจากบทอ่าน Passage A", "Passage A: Nok is a student who wakes up at 5:30 AM everyday to help her mother before going to school.", Pu),
-    _("ม.3", "Reading", "Details", "How does Nok go to school?", ["By bike", "By bus", "On foot", "By boat"], 0, "อ้างอิงจากบทอ่าน Passage A", "Passage A: Nok is a student who wakes up at 5:30 AM everyday to help her mother before going to school.", Pu),
+    <!-- Footer -->
+    <footer class="bg-slate-800 text-slate-400 text-xs py-4 text-center mt-auto">
+        <p> Daily Short Story Reading & Quiz Application</p>
+    </footer>
 
-    _("ม.3", "Reading", "Rules", "How many books can a student borrow at a time?", ["3 books", "5 books", "2 books", "1 book"], 0, "อ้างอิงจากกฎระเบียบห้องสมุดใน Passage B", "Passage B: Library Rules - Students are allowed to borrow a maximum of 3 books for two weeks.", ts),
-    _("ม.3", "Reading", "Rules", "What is the fine if a student returns a book late?", ["5 baht per day", "10 baht per day", "Free", "20 baht per day"], 0, "อ้างอิงจาก Passage B", "Passage B: Library Rules - Students are allowed to borrow a maximum of 3 books for two weeks.", ts)
-  ];
+    <script>
+        // Data Store extracted from the provided PDFs
+        const storiesData = [
+            {
+                id: 1,
+                title: "1. MY ORANGE CAT",
+                set: "ชุดที่ 1",
+                english: "I have a chubby orange cat named Milo. He is very fluffy and loves to be cuddled. Every morning, he wakes up and jumps onto my bed. He meows loudly because he wants food. After breakfast, he sits by the window and watches the birds outside. Sometimes, he chases his tail or plays with a small ball. In the afternoon, he sleeps on the sofa. At night, he follows me around the house. When I go to bed, he curls up next to me for a cozy cuddle. He is my best friend, and I love him very much.",
+                thai: "ฉันมีแมวสีส้มตัวอ้วนกลมชื่อไมโล มันมีขนฟูและชอบถูกกอด ในทุก ๆ เช้ามันจะตื่นและกระโดดขึ้นมาบนเตียง มันร้องเมี้ยวเสียงดังเพราะอยากกินอาหาร หลังอาหารเช้า มันนั่งข้างหน้าต่างและดูนกที่อยู่ด้านนอก บางครั้งมันวิ่งไล่หางของมันเองหรือเล่นกับลูกบอลเล็ก ๆ ตอนบ่ายมันนอนบนโซฟา ตอนกลางคืนมันเดินตามฉันไปทั่วบ้าน เมื่อฉันเข้านอน มันขดตัวอยู่ข้าง ๆ ในอ้อมกอดอันอบอุ่น มันเป็นเพื่อนที่ดีที่สุดของฉัน และฉันรักมันมาก",
+                vocab: [
+                    { en: "chubby", th: "อ้วนกลม" },
+                    { en: "fluffy", th: "ขนฟู" },
+                    { en: "cuddle", th: "กอด" },
+                    { en: "chase", th: "วิ่งไล่" },
+                    { en: "cozy", th: "อบอุ่น/สบาย" }
+                ],
+                quiz: [
+                    {
+                        q: "1. What is the name of the cat in the story?",
+                        options: ["Milo", "Leo", "Felix", "Max"],
+                        answer: 0,
+                        explanation: "ในบทอ่านระบุว่า 'I have a chubby orange cat named Milo.'"
+                    },
+                    {
+                        q: "2. Why does Milo meow loudly in the morning?",
+                        options: ["He wants to go outside.", "He wants food.", "He sees a bird.", "He wants to sleep."],
+                        answer: 1,
+                        explanation: "ในบทอ่านระบุว่า 'He meows loudly because he wants food.'"
+                    },
+                    {
+                        q: "3. Where does Milo sleep in the afternoon?",
+                        options: ["On the bed", "Under the table", "On the sofa", "By the window"],
+                        answer: 2,
+                        explanation: "ในบทอ่านระบุว่า 'In the afternoon, he sleeps on the sofa.'"
+                    }
+                ]
+            },
+            {
+                id: 11,
+                title: "11. MY FAVORITE STREET FOOD",
+                set: "ชุดที่ 2",
+                english: "In Thailand, there are many delicious street foods. Every weekend, I walk down the busy streets near my house. There are so many food vendors selling snacks. I love the smell of grilled squids and fried chicken. My favorite food is Pad Thai. I order it from a small stall, and the vendor adds peanuts and lime on top. The taste is amazing! I enjoy eating it while sitting on a bench, watching people walk by. Street food makes me feel happy because it's delicious and cheap.",
+                thai: "ในประเทศไทยมีอาหารข้างทางอร่อยๆ เยอะมาก ทุกสุดสัปดาห์ ฉันจะเดินลงไปตามถนนที่คึกคักใกล้บ้าน มีร้านขายของหลายร้านที่ขายขนม ฉันชอบกลิ่นของปลาหมึกย่างและไก่ทอด อาหารที่ฉันชอบที่สุดคือผัดไทย ฉันสั่งจากแผงเล็ก ๆ และแม่ค้าจะโรยถั่วลิสงและมะนาวบนผัดไทย รสชาติมันน่าทึ่งมาก! ฉันชอบกินมันในขณะที่นั่งบนม้านั่งและดูคนเดินผ่านไปมา อาหารข้างทางทำให้ฉันรู้สึกมีความสุข เพราะทั้งอร่อยและราคาถูก",
+                vocab: [
+                    { en: "vendor", th: "ผู้ขาย" },
+                    { en: "grilled", th: "ย่าง" },
+                    { en: "stall", th: "แผงขายของ" },
+                    { en: "bench", th: "ม้านั่ง" },
+                    { en: "cheap", th: "ราคาถูก" }
+                ],
+                quiz: [
+                    {
+                        q: "1. What is the speaker's favorite street food?",
+                        options: ["Grilled squids", "Fried chicken", "Pad Thai", "Peanuts"],
+                        answer: 2,
+                        explanation: "ในบทอ่านระบุว่า 'My favorite food is Pad Thai.'"
+                    },
+                    {
+                        q: "2. What does the vendor add on top of the Pad Thai?",
+                        options: ["Sugar and chili", "Peanuts and lime", "Garlic and pepper", "Sauce and onion"],
+                        answer: 1,
+                        explanation: "บทอ่านระบุว่า 'the vendor adds peanuts and lime on top.'"
+                    },
+                    {
+                        q: "3. Why does street food make the speaker happy?",
+                        options: ["It's clean and fast.", "It's delicious and cheap.", "It's rare and healthy.", "It's easy to make."],
+                        answer: 1,
+                        explanation: "บทอ่านสรุปในประโยคสุดท้ายว่า 'because it's delicious and cheap.'"
+                    }
+                ]
+            },
+            {
+                id: 91,
+                title: "91. MT. FUJI",
+                set: "ชุดที่ 10",
+                english: "Mount Fuji is the highest volcano in Japan, standing at 3,776 meters. It is a symbol of Japan and is often seen in paintings, poems, and souvenirs. Fuji is known for its perfect cone-shaped form and snow-capped peak in winter. Many people visit each year to hike, take photos, or watch the sunrise from the top. Whether you're an adventurer or an artist, Mt. Fuji is a breathtaking and unforgettable cultural icon.",
+                thai: "ภูเขาไฟฟูจิเป็นภูเขาไฟที่สูงที่สุดในญี่ปุ่น มีความสูงถึง 3,776 เมตร ถือเป็นสัญลักษณ์ของญี่ปุ่น และมักปรากฏในภาพวาด บทกวี และของที่ระลึกต่าง ๆ ฟูจิโด่งดังจากรูปทรงกรวยที่สมบูรณ์แบบ และยอดเขาที่ปกคลุมด้วยหิมะในฤดูหนาว ทุกปีมีผู้คนจำนวนมากเดินทางไปที่นั่นเพื่อปีนเขา ถ่ายภาพ หรือชมพระอาทิตย์ขึ้นจากยอดเขา ไม่ว่าคุณจะเป็นนักผจญภัยหรือนักศิลปะ ภูเขาไฟฟูจิก็เป็นภาพงดงามจนแทบหยุดหายใจ และเป็นสัญลักษณ์ทางวัฒนธรรมที่ไม่มีวันลืม",
+                vocab: [
+                    { en: "volcano", th: "ภูเขาไฟ" },
+                    { en: "symbol", th: "สัญลักษณ์" },
+                    { en: "cone-shaped", th: "ทรงกรวย" },
+                    { en: "peak", th: "ยอดเขา" },
+                    { en: "breathtaking", th: "งดงามน่าทึ่ง" }
+                ],
+                quiz: [
+                    {
+                        q: "1. How high is Mount Fuji?",
+                        options: ["2,500 meters", "3,776 meters", "4,100 meters", "1,800 meters"],
+                        answer: 1,
+                        explanation: "บทอ่านระบุว่า 'standing at 3,776 meters.'"
+                    },
+                    {
+                        q: "2. What shape is Mt. Fuji known for?",
+                        options: ["Flat top", "Pyramid-shaped", "Perfect cone-shaped", "Round shape"],
+                        answer: 2,
+                        explanation: "บทอ่านระบุว่า 'Fuji is known for its perfect cone-shaped form...'"
+                    },
+                    {
+                        q: "3. What do many visitors watch from the top of Mt. Fuji?",
+                        options: ["The sunset", "The ocean", "The sunrise", "The fireworks"],
+                        answer: 2,
+                        explanation: "บทอ่านระบุว่า 'watch the sunrise from the top.'"
+                    }
+                ]
+            },
+            {
+                id: 129,
+                title: "129. HONEY NEVER SPOILS",
+                set: "ชุดที่ 13",
+                english: "Believe it or not, honey can last forever. Archaeologists have found pots of honey in ancient Egyptian tombs that are over 3,000 years old and still edible! Honey's long shelf life comes from its low moisture content and natural acidity, which make it hard for bacteria to grow. It also contains hydrogen peroxide, a natural preservative. If your honey crystallizes, don't worry. Just warm it gently, and it returns to normal. So the next time you see honey in your pantry, remember it's nature's sweetest time traveler.",
+                thai: "เชื่อไหมว่าน้ำผึ้งสามารถอยู่ได้ตลอดไป นักโบราณคดีเคยพบไหใส่น้ำผึ้งในสุสานอียิปต์โบราณอายุกว่า 3,000 ปี และยังกินได้! น้ำผึ้งอยู่ได้นานเพราะมีความชื้นต่ำและมีความเป็นกรดตามธรรมชาติ ทำให้แบคทีเรียเติบโตได้ยาก นอกจากนี้ยังมีไฮโดรเจนเปอร์ออกไซด์ซึ่งช่วยถนอมอาหารตามธรรมชาติ ถ้าน้ำผึ้งตกผลึกก็ไม่ต้องตกใจ แค่อุ่นเบา ๆ ก็กลับมาเหมือนเดิม ครั้งหน้าเจอน้ำผึ้งในตู้ อย่าทิ้งนะ นี่คือนักเดินทางข้ามกาลเวลาที่หวานที่สุดของธรรมชาติเลยล่ะ",
+                vocab: [
+                    { en: "archaeologist", th: "นักโบราณคดี" },
+                    { en: "edible", th: "กินได้" },
+                    { en: "moisture", th: "ความชื้น" },
+                    { en: "acidity", th: "ความเป็นกรด" },
+                    { en: "preservative", th: "สารกันเสีย" }
+                ],
+                quiz: [
+                    {
+                        q: "1. How old was the edible honey found in Egyptian tombs?",
+                        options: ["Over 100 years old", "Over 500 years old", "Over 1,000 years old", "Over 3,000 years old"],
+                        answer: 3,
+                        explanation: "บทอ่านระบุว่า 'found pots of honey in ancient Egyptian tombs that are over 3,000 years old'"
+                    },
+                    {
+                        q: "2. Why is it hard for bacteria to grow in honey?",
+                        options: ["High sugar content only", "Low moisture and natural acidity", "Cold temperature", "Artificial chemicals"],
+                        answer: 1,
+                        explanation: "บทอ่านระบุว่า 'comes from its low moisture content and natural acidity'"
+                    },
+                    {
+                        q: "3. What should you do if honey crystallizes?",
+                        options: ["Throw it away", "Add water", "Warm it gently", "Freeze it"],
+                        answer: 2,
+                        explanation: "บทอ่านระบุว่า 'If your honey crystallizes... Just warm it gently, and it returns to normal.'"
+                    }
+                ]
+            },
+            {
+                id: 141,
+                title: "141. LUNGS OF THE EARTH",
+                set: "ชุดที่ 15",
+                english: "The Amazon Rainforest is called the lungs of the Earth. It creates over 20% of the world's oxygen and helps absorb carbon dioxide. This vast rainforest is home to thousands of species of plants and animals. Its canopy forms a roof that blocks sunlight, while below lies a world of rich biodiversity. As a key ecosystem, the Amazon affects the global climate. But deforestation continues, cutting down trees at a rapid rate. Saving the Amazon is vital for the future of our planet.",
+                thai: "ป่าแอมะซอนมักถูกเรียกว่า “ปอดของโลก” เพราะสร้างออกซิเจนมากกว่า 20% ของทั้งโลก และยังช่วยดูดซับก๊าซคาร์บอนไดออกไซด์ ป่าฝนอันกว้างใหญ่นี้เป็นที่อยู่อาศัยของสิ่งมีชีวิตหลากหลายสายพันธุ์ทั้งพืชและสัตว์ เรือนยอดไม้ของมันก่อตัวเป็นหลังคาธรรมชาติที่บดบังแสงแดดไว้ ข้างล่างคือโลกอันเต็มไปด้วยความหลากหลายทางชีวภาพ ในฐานะระบบนิเวศสำคัญ แอมะซอนมีผลต่อภูมิอากาศทั่วโลก แต่การตัดไม้ทำลายป่ายังคงเกิดขึ้นอย่างรวดเร็ว การปกป้องป่าแห่งนี้จึงสำคัญยิ่งต่ออนาคตของโลกเรา",
+                vocab: [
+                    { en: "rainforest", th: "ป่าฝนเขตร้อน" },
+                    { en: "absorb", th: "ดูดซับ" },
+                    { en: "canopy", th: "เรือนยอดไม้" },
+                    { en: "deforestation", th: "การตัดไม้ทำลายป่า" },
+                    { en: "vital", th: "สำคัญยิ่ง" }
+                ],
+                quiz: [
+                    {
+                        q: "1. What percentage of the world's oxygen does the Amazon Rainforest create?",
+                        options: ["Over 10%", "Over 20%", "Over 50%", "Over 70%"],
+                        answer: 1,
+                        explanation: "บทอ่านระบุว่า 'It creates over 20% of the world's oxygen...'"
+                    },
+                    {
+                        q: "2. What forms a roof that blocks sunlight in the Amazon?",
+                        options: ["Clouds", "Mountains", "Its canopy", "Tall rocks"],
+                        answer: 2,
+                        explanation: "บทอ่านระบุว่า 'Its canopy forms a roof that blocks sunlight...'"
+                    },
+                    {
+                        q: "3. What threat is currently happening to the Amazon Rainforest?",
+                        options: ["Deforestation", "Heavy snowfall", "Overpopulation of animals", "Volcano eruption"],
+                        answer: 0,
+                        explanation: "บทอ่านระบุว่า 'But deforestation continues, cutting down trees at a rapid rate.'"
+                    }
+                ]
+            }
+        ];
 
-  function renderQuiz(questionsToRender) {
-    const container = document.getElementById("quiz-container");
-    container.innerHTML = "";
+        let currentStory = null;
 
-    if (questionsToRender.length === 0) {
-      container.innerHTML = "<div class='no-result'>ไม่พบข้อสอบในหมวดหมู่ที่คุณเลือก</div>";
-      return;
-    }
+        // Initialize App
+        document.addEventListener('DOMContentLoaded', () => {
+            renderStoryGrid();
+            lucide.createIcons();
+        });
 
-    let lastPassage = "";
+        // Render Stories List Grid
+        function renderStoryGrid() {
+            const grid = document.getElementById('story-grid');
+            grid.innerHTML = storiesData.map(story => `
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5 hover:shadow-md transition flex flex-col justify-between">
+                    <div class="space-y-2">
+                        <span class="text-xs font-semibold px-2 py-0.5 bg-indigo-50 text-indigo-600 rounded-md">${story.set}</span>
+                        <h3 class="font-bold text-slate-800 text-lg leading-snug">${story.title}</h3>
+                        <p class="text-xs text-slate-500 line-clamp-2 font-sans">${story.english}</p>
+                    </div>
+                    <button onclick="openStory(${story.id})" class="mt-4 w-full bg-slate-100 hover:bg-indigo-600 hover:text-white text-indigo-600 text-sm font-semibold py-2 rounded-lg transition flex items-center justify-center space-x-1">
+                        <span>อ่าน & ทำข้อสอบ</span>
+                        <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            `).join('');
+            lucide.createIcons();
+        }
 
-    questionsToRender.forEach((q, index) => {
-      const card = document.createElement("div");
-      card.className = "question-card";
+        // Display Selected Story Details
+        function openStory(id) {
+            currentStory = storiesData.find(s => s.id === id);
+            if (!currentStory) return;
 
-      let htmlContent = "";
+            document.getElementById('story-category-tag').innerText = currentStory.set;
+            document.getElementById('story-title').innerText = currentStory.title;
+            document.getElementById('story-english').innerText = currentStory.english;
+            document.getElementById('story-thai').innerText = currentStory.thai;
 
-      if (q.category === "Reading" && q.passage && q.passage !== lastPassage) {
-        htmlContent += `<div class="passage-box"><b>📖 บทอ่าน (Passage):</b><br>${q.passage}</div>`;
-        lastPassage = q.passage;
-      }
+            // Render Vocabulary
+            const vocabContainer = document.getElementById('story-vocab');
+            vocabContainer.innerHTML = currentStory.vocab.map(v => `
+                <div class="bg-slate-50 border border-slate-200 p-2 rounded-lg text-xs">
+                    <div class="font-bold text-indigo-600 font-sans">${v.en}</div>
+                    <div class="text-slate-500">${v.th}</div>
+                </div>
+            `).join('');
 
-      htmlContent += `<div class="question-title">ข้อที่ ${index + 1} [${q.subCategory}]: ${q.question.replace(/\n/g, '<br>')}</div>`;
-      htmlContent += `<div class="options-list">`;
+            // Render Quiz Questions
+            renderQuizQuestions();
 
-      q.options.forEach((opt, optIndex) => {
-        htmlContent += `
-          <label>
-            <input type="radio" name="question_${index}" value="${optIndex}">
-            ${String.fromCharCode(65 + optIndex)}. ${opt}
-          </label>
-        `;
-      });
+            // Toggle screens
+            document.getElementById('story-selection-screen').classList.add('hidden');
+            document.getElementById('story-detail-screen').classList.remove('hidden');
 
-      htmlContent += `</div>`;
-      card.innerHTML = htmlContent;
-      container.appendChild(card);
-    });
-  }
+            // Switch to Read Tab by default
+            switchTab('read');
+        }
 
-  function filterQuestions(selectedCategory, btnElement) {
-    // จัดการเปลี่ยนสถานะ Active ของปุ่ม
-    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-    btnElement.classList.add('active');
+        function showStoryList() {
+            document.getElementById('story-detail-screen').classList.add('hidden');
+            document.getElementById('story-selection-screen').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
 
-    let filteredList = [];
+        // Switch Tabs: 'read' | 'quiz'
+        function switchTab(tab) {
+            const readTab = document.getElementById('tab-read');
+            const quizTab = document.getElementById('tab-quiz');
+            const readBtn = document.getElementById('tab-read-btn');
+            const quizBtn = document.getElementById('tab-quiz-btn');
 
-    if (selectedCategory === "ALL") {
-      filteredList = examDatabase;
-    } else {
-      filteredList = examDatabase.filter(q => q.subCategory === selectedCategory || q.category === selectedCategory);
-    }
+            if (tab === 'read') {
+                readTab.classList.remove('hidden');
+                quizTab.classList.add('hidden');
 
-    if (selectedCategory === "Reading") {
-      filteredList.sort((a, b) => a.passageId - b.passageId);
-    }
+                readBtn.className = "flex-1 py-3 px-4 text-center font-semibold text-indigo-600 border-b-2 border-indigo-600 flex items-center justify-center space-x-2 transition";
+                quizBtn.className = "flex-1 py-3 px-4 text-center font-semibold text-slate-500 hover:text-indigo-600 flex items-center justify-center space-x-2 transition";
+            } else {
+                quizTab.classList.remove('hidden');
+                readTab.classList.add('hidden');
 
-    renderQuiz(filteredList);
-  }
+                quizBtn.className = "flex-1 py-3 px-4 text-center font-semibold text-indigo-600 border-b-2 border-indigo-600 flex items-center justify-center space-x-2 transition";
+                readBtn.className = "flex-1 py-3 px-4 text-center font-semibold text-slate-500 hover:text-indigo-600 flex items-center justify-center space-x-2 transition";
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
 
-  window.onload = function() {
-    renderQuiz(examDatabase);
-  };
-</script>
+        // Render Quiz Questions Dynamic Format
+        function renderQuizQuestions() {
+            const quizContainer = document.getElementById('quiz-container');
+            document.getElementById('quiz-score-badge').classList.add('hidden');
 
+            quizContainer.innerHTML = currentStory.quiz.map((q, qIndex) => `
+                <div class="p-4 border border-slate-200 rounded-xl space-y-3 bg-slate-50/50" id="q-box-${qIndex}">
+                    <p class="font-bold text-slate-800 text-sm md:text-base">${q.q}</p>
+                    <div class="space-y-2">
+                        ${q.options.map((opt, oIndex) => `
+                            <label class="flex items-start space-x-3 p-3 bg-white border border-slate-200 rounded-lg cursor-pointer hover:border-indigo-300 transition text-sm">
+                                <input type="radio" name="q_${qIndex}" value="${oIndex}" class="mt-0.5 text-indigo-600 focus:ring-indigo-500">
+                                <span class="text-slate-700">${opt}</span>
+                            </label>
+                        `).join('')}
+                    </div>
+                    <div id="explanation-${qIndex}" class="hidden p-3 bg-indigo-50 border border-indigo-100 rounded-lg text-xs text-indigo-800 space-y-1">
+                        <span class="font-bold">เฉลย/อธิบาย:</span>
+                        <p>${q.explanation}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Submit and Grade Quiz
+        function submitQuiz() {
+            let score = 0;
+            const total = currentStory.quiz.length;
+
+            currentStory.quiz.forEach((q, qIndex) => {
+                const selected = document.querySelector(`input[name="q_${qIndex}"]:checked`);
+                const qBox = document.getElementById(`q-box-${qIndex}`);
+                const expBox = document.getElementById(`explanation-${qIndex}`);
+
+                // Reset styles
+                qBox.classList.remove('border-green-500', 'border-red-500', 'bg-green-50/30', 'bg-red-50/30');
+                expBox.classList.remove('hidden');
+
+                if (selected && parseInt(selected.value) === q.answer) {
+                    score++;
+                    qBox.classList.add('border-green-500', 'bg-green-50/30');
+                } else {
+                    qBox.classList.add('border-red-500', 'bg-red-50/30');
+                }
+            });
+
+            // Display Score
+            const badge = document.getElementById('quiz-score-badge');
+            badge.innerText = `คะแนนที่ได้: ${score} / ${total}`;
+            badge.classList.remove('hidden');
+        }
+
+        // Reset Quiz Form
+        function resetQuiz() {
+            document.getElementById('quiz-form').reset();
+            currentStory.quiz.forEach((_, qIndex) => {
+                const qBox = document.getElementById(`q-box-${qIndex}`);
+                const expBox = document.getElementById(`explanation-${qIndex}`);
+                qBox.classList.remove('border-green-500', 'border-red-500', 'bg-green-50/30', 'bg-red-50/30');
+                expBox.classList.add('hidden');
+            });
+            document.getElementById('quiz-score-badge').classList.add('hidden');
+        }
+    </script>
 </body>
 </html>
+```eof
+
+### สรุปสิ่งที่คุณจะได้รับ:
+1. **คลังบทอ่านเรื่องสั้น (Daily Short Stories):** คัดสรรเรื่องสั้นภาษาอังกฤษ แปลไทย พร้อมตารางคำศัพท์สำคัญ
+2. **ระบบทำข้อสอบ (Reading Quiz):** มีแบบทดสอบเลือกตอบ 3 ตัวเลือกย่อยในแต่ละเรื่อง พร้อมเฉลย คำอธิบายเหตุผล และระบบตรวจคะแนนอัตโนมัติ
+3. **การออกแบบ:** ดีไซน์ทันสมัย ใช้งานบนสมาร์ตโฟนและคอมพิวเตอร์ได้อย่างสะดวก
