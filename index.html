@@ -113,16 +113,15 @@
 </div>
 
 <script>
-  // ฟังก์ชันช่วยสร้างโครงสร้างข้อสอบ (ย่อการเขียน)
+  // ฟังก์ชันช่วยสร้างโครงสร้างข้อสอบ
   function _(level, subCat, category, question, options, answer, explanation, passage = "", passageId = 0) {
     return { level, subCategory: subCat, category, question, options, answer, explanation, passage, passageId };
   }
 
-  // ตัวแปรจำลองตัวแปรอ้างอิงบทอ่าน (Passage tags)
   const Pu = 1;
   const ts = 2;
 
-  // ฐานข้อมูลข้อสอบทั้งหมดที่จัดหมวดหมู่และผูกกลุ่ม Reading เรียบร้อย
+  // ฐานข้อมูลข้อสอบทั้งหมด
   const examDatabase = [
     // 1. Preposition
     _("ม.3", "Preposition", "Grammar", "Nok usually goes to school ______ 7:00 AM.", ["at", "in", "on", "by"], 0, "ใช้ at กับเวลาที่เป็นจุดชัดเจนบนนาฬิกา"),
@@ -145,12 +144,10 @@
     // 5. Conversation
     _("ม.3", "Conversation", "Daily Life", "A: How do you do?\nB: ______", ["How do you do?", "I'm fine, thank you.", "Nice to meet you.", "Good morning."], 0, "ทักทายแบบเป็นทางการ How do you do? ต้องตอบกลับด้วย How do you do?"),
 
-    // 6. Reading (ผูกกลุ่มเนื้อเรื่อง Passage A และ Passage B ให้อยู่ติดกัน)
-    // --- Passage A ---
+    // 6. Reading
     _("ม.3", "Reading", "Details", "What time does Nok wake up everyday?", ["5:30 AM", "6:30 AM", "7:00 AM", "8:00 AM"], 0, "อ้างอิงจากบทอ่าน Passage A", "Passage A: Nok is a student who wakes up at 5:30 AM everyday to help her mother before going to school.", Pu),
     _("ม.3", "Reading", "Details", "How does Nok go to school?", ["By bike", "By bus", "On foot", "By boat"], 0, "อ้างอิงจากบทอ่าน Passage A", "Passage A: Nok is a student who wakes up at 5:30 AM everyday to help her mother before going to school.", Pu),
 
-    // --- Passage B ---
     _("ม.3", "Reading", "Rules", "How many books can a student borrow at a time?", ["3 books", "5 books", "2 books", "1 book"], 0, "อ้างอิงจากกฎระเบียบห้องสมุดใน Passage B", "Passage B: Library Rules - Students are allowed to borrow a maximum of 3 books for two weeks.", ts),
     _("ม.3", "Reading", "Rules", "What is the fine if a student returns a book late?", ["5 baht per day", "10 baht per day", "Free", "20 baht per day"], 0, "อ้างอิงจาก Passage B", "Passage B: Library Rules - Students are allowed to borrow a maximum of 3 books for two weeks.", ts)
   ];
@@ -173,7 +170,6 @@
 
       let htmlContent = "";
 
-      // ถ้าเป็น Reading และมี Passage ที่ยังไม่เคยแสดง ให้แสดงกล่องเนื้อเรื่องก่อน
       if (q.category === "Reading" && q.passage && q.passage !== lastPassage) {
         htmlContent += `<div class="passage-box"><b>📖 บทอ่าน (Passage):</b><br>${q.passage}</div>`;
         lastPassage = q.passage;
@@ -207,7 +203,6 @@
       filteredList = examDatabase.filter(q => q.subCategory === selectedCategory || q.category === selectedCategory);
     }
 
-    // หากเลือกหมวด Reading ให้เรียงลำดับตาม Passage เสมอ
     if (selectedCategory === "Reading") {
       filteredList.sort((a, b) => a.passageId - b.passageId);
     }
