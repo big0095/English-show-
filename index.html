@@ -3,117 +3,311 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ระบบคลังข้อสอบภาษาอังกฤษ</title>
+  <title>ENGLISH EXAM MASTER - คลังข้อสอบภาษาอังกฤษ</title>
   <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f4f7f6;
-      color: #333;
+    :root {
+      --sidebar-width: 260px;
+      --bg-color: #f8fafc;
+      --card-bg: #ffffff;
+      --primary-color: #3b82f6;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+    }
+
+    * {
+      box-sizing: border-box;
       margin: 0;
-      padding: 20px;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-      background: #fff;
-      padding: 30px;
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* --- Sidebar Styles --- */
+    aside {
+      width: var(--sidebar-width);
+      background: var(--card-bg);
+      border-right: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      height: 100vh;
+      top: 0;
+      left: 0;
+      z-index: 10;
+    }
+
+    .brand-container {
+      padding: 24px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .brand-icon {
+      background: var(--primary-color);
+      color: white;
+      width: 40px;
+      height: 40px;
       border-radius: 10px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
     }
-    h1 {
-      text-align: center;
-      color: #2c3e50;
+
+    .brand-title h2 {
+      font-size: 15px;
+      color: var(--text-main);
+      font-weight: 700;
+      letter-spacing: 0.5px;
     }
-    .filter-container {
-      margin-bottom: 25px;
-      padding: 15px;
-      background: #eef2f3;
+
+    .brand-title span {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .nav-section {
+      padding: 20px 15px;
+      flex-grow: 1;
+      overflow-y: auto;
+    }
+
+    .nav-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+      padding-left: 10px;
+      font-weight: 600;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      color: var(--text-muted);
+      text-decoration: none;
       border-radius: 8px;
+      margin-bottom: 4px;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.2s ease;
     }
-    .filter-container label {
-      font-weight: bold;
-      display: block;
+
+    .nav-item:hover, .nav-item.active {
+      background: #eff6ff;
+      color: var(--primary-color);
+    }
+
+    /* --- Main Content Layout --- */
+    main {
+      margin-left: var(--sidebar-width);
+      flex-grow: 1;
+      padding: 30px;
+      max-width: calc(100vw - var(--sidebar-width));
+    }
+
+    .header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      background: var(--card-bg);
+      padding: 15px 25px;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+    }
+
+    .breadcrumb {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .breadcrumb span {
+      color: var(--text-main);
+      font-weight: 600;
+    }
+
+    /* --- Content Section --- */
+    .section-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-main);
       margin-bottom: 8px;
     }
-    .filter-container select {
-      width: 100%;
-      padding: 10px;
-      font-size: 16px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
+
+    .section-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 25px;
     }
-    .question-card {
-      background: #fafafa;
-      border-left: 5px solid #3498db;
-      padding: 20px;
-      margin-bottom: 20px;
-      border-radius: 4px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+
+    /* Filter Badges / Buttons */
+    .filter-tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 25px;
+      flex-wrap: wrap;
     }
-    .passage-box {
-      background: #e8f4fd;
-      padding: 15px;
-      border-radius: 5px;
-      margin-bottom: 15px;
-      border-left: 5px solid #2980b9;
-      font-style: italic;
-    }
-    .question-title {
-      font-size: 18px;
-      font-weight: bold;
-      margin-bottom: 15px;
-    }
-    .options-list label {
-      display: block;
-      padding: 8px 12px;
-      margin-bottom: 8px;
-      background: #fff;
-      border: 1px solid #ddd;
-      border-radius: 4px;
+
+    .filter-btn {
+      padding: 8px 16px;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
       cursor: pointer;
-      transition: background 0.2s;
+      transition: all 0.2s;
     }
-    .options-list label:hover {
-      background: #f1f1f1;
+
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--primary-color);
+      color: white;
+      border-color: var(--primary-color);
     }
-    .options-list input {
-      margin-right: 10px;
-    }
+
+    /* --- Quiz Card & Layout Grid --- */
     #quiz-container {
-      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .question-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-left: 5px solid var(--primary-color);
+      padding: 24px;
+      border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+      transition: transform 0.2s;
+    }
+
+    .question-card:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .passage-box {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      padding: 16px;
+      border-radius: 8px;
+      margin-bottom: 18px;
+      border-left: 5px solid #2563eb;
+      font-size: 14px;
+      color: #1e40af;
+      line-height: 1.6;
+    }
+
+    .question-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+
+    .options-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .options-list label {
+      display: flex;
+      align-items: center;
+      padding: 10px 14px;
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+
+    .options-list label:hover {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+    }
+
+    .options-list input {
+      margin-right: 12px;
+      accent-color: var(--primary-color);
+      transform: scale(1.1);
+    }
+
+    .no-result {
+      text-align: center;
+      padding: 40px;
+      color: var(--text-muted);
+      background: var(--card-bg);
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
     }
   </style>
 </head>
 <body>
 
-<div class="container">
-  <h1>ระบบแบบทดสอบภาษาอังกฤษ</h1>
-  
-  <!-- เมนูดรอปดาวน์เลือกหมวดหมู่ -->
-  <div class="filter-container">
-    <label for="categorySelect">เลือกหมวดหมู่แบบทดสอบที่ต้องการทำ:</label>
-    <select id="categorySelect" onchange="filterQuestionsByCategory(this.value)">
-      <option value="ALL">-- แสดงข้อสอบทั้งหมด --</option>
-      <optgroup label="📚 Grammar (ไวยากรณ์)">
-        <option value="Preposition">Preposition (คำบุพบท)</option>
-        <option value="If-Clause">If-Clause (ประโยคเงื่อนไข)</option>
-        <option value="Passive Voice">Passive Voice</option>
-        <option value="Tense">Tenses</option>
-      </optgroup>
-      <optgroup label="📝 หมวดอื่นๆ">
-        <option value="Vocabulary">Vocabulary (คำศัพท์)</option>
-        <option value="Conversation">Conversation (บทสนทนา)</option>
-        <option value="Reading">Reading (อ่านจับใจความ)</option>
-      </optgroup>
-    </select>
-  </div>
+  <!-- Sidebar เมนูด้านซ้ายตามต้นฉบับ -->
+  <aside>
+    <div class="brand-container">
+      <div class="brand-icon">📚</div>
+      <div class="brand-title">
+        <h2>ENGLISH EXAM</h2>
+        <span>Master Teacher</span>
+      </div>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">เมนูหลัก</div>
+      <a href="#" class="nav-item">🏠 หน้าหลัก</a>
+      <a href="#" class="nav-item active">📖 บทเรียน & คลังข้อสอบ</a>
+      <a href="#" class="nav-item">✍️ ฝึกทำข้อสอบ</a>
+      <a href="#" class="nav-item">📊 จำลองสนามสอบ</a>
+      <a href="#" class="nav-item">📈 ความก้าวหน้า</a>
+    </div>
+  </aside>
 
-  <!-- พื้นที่แสดงข้อสอบ -->
-  <div id="quiz-container"></div>
-</div>
+  <!-- เนื้อหาหลักด้านขวา -->
+  <main>
+    <div class="header-bar">
+      <div class="breadcrumb">เตรียมสอบครูผู้ช่วย &gt; <span>คลังข้อสอบทั้งหมด</span></div>
+      <div style="font-size: 13px; font-weight: 600; color: var(--primary-color);">ระบบออนไลน์ ⚡</div>
+    </div>
+
+    <div class="section-title">คลังข้อสอบภาษาอังกฤษ</div>
+    <div class="section-desc">เลือกหมวดหมู่หัวข้อที่ต้องการฝึกฝน แล้วพัฒนาความแม่นยำทีละเรื่อง</div>
+
+    <!-- ปุ่มกรองหมวดหมู่ข้อสอบ -->
+    <div class="filter-tabs" id="filterTabs">
+      <button class="filter-btn active" onclick="filterQuestions('ALL', this)">ทั้งหมด</button>
+      <button class="filter-btn" onclick="filterQuestions('Preposition', this)">Preposition</button>
+      <button class="filter-btn" onclick="filterQuestions('If-Clause', this)">If-Clause</button>
+      <button class="filter-btn" onclick="filterQuestions('Passive Voice', this)">Passive Voice</button>
+      <button class="filter-btn" onclick="filterQuestions('Tense', this)">Tenses</button>
+      <button class="filter-btn" onclick="filterQuestions('Vocabulary', this)">Vocabulary</button>
+      <button class="filter-btn" onclick="filterQuestions('Conversation', this)">Conversation</button>
+      <button class="filter-btn" onclick="filterQuestions('Reading', this)">Reading</button>
+    </div>
+
+    <!-- พื้นที่แสดงข้อสอบ -->
+    <div id="quiz-container"></div>
+  </main>
 
 <script>
-  // ฟังก์ชันช่วยสร้างโครงสร้างข้อสอบ
   function _(level, subCat, category, question, options, answer, explanation, passage = "", passageId = 0) {
     return { level, subCategory: subCat, category, question, options, answer, explanation, passage, passageId };
   }
@@ -121,30 +315,24 @@
   const Pu = 1;
   const ts = 2;
 
-  // ฐานข้อมูลข้อสอบทั้งหมด
+  // ฐานข้อมูลข้อสอบ
   const examDatabase = [
-    // 1. Preposition
     _("ม.3", "Preposition", "Grammar", "Nok usually goes to school ______ 7:00 AM.", ["at", "in", "on", "by"], 0, "ใช้ at กับเวลาที่เป็นจุดชัดเจนบนนาฬิกา"),
     _("ม.3", "Preposition", "Grammar", "The cat is sleeping ______ the table.", ["under", "between", "among", "into"], 0, "under แปลว่า อยู่ใต้/ล่าง"),
     _("ม.3", "Preposition", "Grammar", "We always have lunch together ______ noon.", ["at", "on", "in", "for"], 0, "ใช้คำว่า at noon"),
 
-    // 2. If-Clause
     _("ม.3", "If-Clause", "Grammar", "If it rains tomorrow, we ______ at home.", ["will stay", "stayed", "would stay", "had stayed"], 0, "If-Clause Type 1: If + Present Simple, Future Simple (will + V.1)"),
     _("ม.3", "If-Clause", "Grammar", "If I ______ rich, I would travel around the world.", ["were", "am", "will be", "have been"], 0, "If-Clause Type 2: สมมติในปัจจุบันใช้ If + Past Simple (ใช้ were เสมอกับทุกประธาน)"),
     _("ม.3", "If-Clause", "Grammar", "She would pass the exam if she ______ harder.", ["studied", "studies", "study", "will study"], 0, "If-Clause Type 2: would + V.1 + if + Past Simple (V.2)"),
 
-    // 3. Passive Voice & Tenses
     _("ม.3", "Passive Voice", "Grammar", "This English book ______ by a famous author last year.", ["was written", "wrote", "is writing", "writes"], 0, "Passive Voice ในอดีต: Subject + was/were + V.3"),
     _("ม.3", "Tense", "Grammar", "They ______ English for five years.", ["have studied", "study", "studying", "studied"], 0, "Present Perfect: เหตุการณ์ที่เกิดตั้งแต่อดีตต่อเนื่องถึงปัจจุบัน (for + ระยะเวลา)"),
 
-    // 4. Vocabulary
     _("ม.3", "Vocabulary", "Meaning", "The weather is very ______ today. Please take an umbrella.", ["rainy", "sunny", "dry", "windy"], 0, "บริบทบอกให้พกร่ม คำตอบคือ rainy (ฝนตก)"),
     _("ม.3", "Vocabulary", "Synonym", "What is the synonym of the word 'huge'?", ["enormous", "tiny", "narrow", "short"], 0, "huge แปลว่าใหญ่โต มีความหมายเดียวกับ enormous"),
 
-    // 5. Conversation
     _("ม.3", "Conversation", "Daily Life", "A: How do you do?\nB: ______", ["How do you do?", "I'm fine, thank you.", "Nice to meet you.", "Good morning."], 0, "ทักทายแบบเป็นทางการ How do you do? ต้องตอบกลับด้วย How do you do?"),
 
-    // 6. Reading
     _("ม.3", "Reading", "Details", "What time does Nok wake up everyday?", ["5:30 AM", "6:30 AM", "7:00 AM", "8:00 AM"], 0, "อ้างอิงจากบทอ่าน Passage A", "Passage A: Nok is a student who wakes up at 5:30 AM everyday to help her mother before going to school.", Pu),
     _("ม.3", "Reading", "Details", "How does Nok go to school?", ["By bike", "By bus", "On foot", "By boat"], 0, "อ้างอิงจากบทอ่าน Passage A", "Passage A: Nok is a student who wakes up at 5:30 AM everyday to help her mother before going to school.", Pu),
 
@@ -152,13 +340,12 @@
     _("ม.3", "Reading", "Rules", "What is the fine if a student returns a book late?", ["5 baht per day", "10 baht per day", "Free", "20 baht per day"], 0, "อ้างอิงจาก Passage B", "Passage B: Library Rules - Students are allowed to borrow a maximum of 3 books for two weeks.", ts)
   ];
 
-  // ฟังก์ชันแสดงผลข้อสอบลงในหน้าเว็บ
   function renderQuiz(questionsToRender) {
     const container = document.getElementById("quiz-container");
     container.innerHTML = "";
 
     if (questionsToRender.length === 0) {
-      container.innerHTML = "<p style='text-align:center; color: #7f8c8d;'>ไม่พบข้อสอบในหมวดหมู่ที่คุณเลือก</p>";
+      container.innerHTML = "<div class='no-result'>ไม่พบข้อสอบในหมวดหมู่ที่คุณเลือก</div>";
       return;
     }
 
@@ -193,8 +380,11 @@
     });
   }
 
-  // ฟังก์ชันกรองข้อสอบเมื่อผู้ใช้เลือกหมวดหมู่
-  function filterQuestionsByCategory(selectedCategory) {
+  function filterQuestions(selectedCategory, btnElement) {
+    // จัดการเปลี่ยนสถานะ Active ของปุ่ม
+    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+    btnElement.classList.add('active');
+
     let filteredList = [];
 
     if (selectedCategory === "ALL") {
@@ -210,7 +400,6 @@
     renderQuiz(filteredList);
   }
 
-  // โหลดแสดงข้อสอบทั้งหมดเริ่มต้นเมื่อเปิดหน้าเว็บ
   window.onload = function() {
     renderQuiz(examDatabase);
   };
