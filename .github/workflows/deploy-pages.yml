@@ -26,12 +26,10 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Download the latest submitted Academy HTML
+      - name: Copy the latest Academy HTML into the Pages build
         run: |
           mkdir -p public
-          curl --fail --location --retry 3 \
-            'https://raw.githubusercontent.com/big0095/English-show-/ca43de208364109aad82ae1ab337508a654706bf/English%20Exam%20Academy%20%E2%80%93%20%E0%B8%95%E0%B8%B4%E0%B8%A7%E0%B8%AA%E0%B8%AD%E0%B8%9A%E0%B8%A0%E0%B8%B2%E0%B8%A9%E0%B8%B2%E0%B8%AD%E0%B8%B1%E0%B8%87%E0%B8%81%E0%B8%A4%E0%B8%A9%E0%B9%81%E0%B8%A5%E0%B8%B0%E0%B8%AA%E0%B8%AD%E0%B8%9A%E0%B8%9A%E0%B8%A3%E0%B8%A3%E0%B8%88%E0%B8%B8%20(1).html' \
-            --output public/exam-academy.html
+          cp './English Exam Academy – ติวสอบภาษาอังกฤษและสอบบรรจุ (1).html' public/exam-academy.html
           test -s public/exam-academy.html
 
       - name: Build app
