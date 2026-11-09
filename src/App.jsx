@@ -1,9 +1,11 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import {
   BookOpen, Brain, ChartNoAxesColumnIncreasing, ClipboardCheck, Clock3,
   GraduationCap, House, Menu, Search, Settings, Target, Trophy, X,
   CheckCircle2, XCircle, ChevronRight, RotateCcw, BookMarked, Sparkles
 } from 'lucide-react'
+import { saveMyProgress, getMyProgress } from './lib/member-data'
+import { supabase } from './lib/supabase'
 
 const questions = [
   {
@@ -11,7 +13,7 @@ const questions = [
     question: 'She _____ to school by bus every day.',
     options: ['go', 'goes', 'going', 'gone'],
     answer: 1,
-    explanation: 'ประธาน She เป็นเอกพจน์บุรุษที่ 3 ใน Present Simple จึงเติม -s หรือ -es ที่คำกริยา โดย go เปลี่ยนเป็น goes',
+    explanation: 'ประธาน She เป็นเอกพจน์บุรุษที่ 3 ใน Present Simple จึงเติม -s หรือ -es ที่คำกริยา ...',
     tip: 'จำไว้: He / She / It + V-s/es ในประโยคบอกเล่า Present Simple'
   },
   {
@@ -35,7 +37,7 @@ const questions = [
     question: 'They _____ in this school since 2020.',
     options: ['work', 'worked', 'have worked', 'are working'],
     answer: 2,
-    explanation: 'มี since 2020 แสดงจุดเริ่มต้นในอดีตต่อเนื่องถึงปัจจุบัน จึงใช้ Present Perfect: have/has + V3',
+    explanation: 'มี since 2020 แสดงจุดเริ่มต้นในอดีตต่อเนื่องถึงปัจจุบัน จึงใช้ Present Perfect: ...',
     tip: 'since + จุดเริ่มต้น, for + ระยะเวลา มักใช้กับ Present Perfect'
   },
   {
@@ -73,12 +75,12 @@ const questions = [
 ]
 
 const lessons = [
-  { id: 'tenses', title: 'Tenses ที่ออกสอบบ่อย', desc: 'Present, Past และ Future พร้อมคำบอกเวลา', tag: 'Grammar', time: '20 นาที', icon: BookOpen },
-  { id: 'sva', title: 'Subject-Verb Agreement', desc: 'การเลือกกริยาให้สอดคล้องกับประธาน', tag: 'Grammar', time: '15 นาที', icon: Brain },
+  { id: 'tenses', title: 'Tenses ที่ออกสอบบ่อย', desc: 'Present, Past และ Future พร้อมคำบอกเวลา', tag: 'Grammar', time: '20 นาที', icon: BookMarked },
+  { id: 'sva', title: 'Subject-Verb Agreement', desc: 'การเลือกกริยาให้สอดคล้องกับประธาน', tag: 'Grammar', time: '15 นาที', icon: BookMarked },
   { id: 'prep', title: 'Prepositions', desc: 'การใช้ in, on, at และคำบุพบทสำคัญ', tag: 'Grammar', time: '15 นาที', icon: BookMarked },
-  { id: 'vocab', title: 'Vocabulary for Teachers', desc: 'คำศัพท์เกี่ยวกับโรงเรียนและการศึกษา', tag: 'Vocabulary', time: '15 นาที', icon: GraduationCap },
-  { id: 'reading-lesson', title: 'Reading Comprehension', desc: 'ฝึกอ่านจับใจความและหาความหมายจากบริบท', tag: 'Reading', time: '25 นาที', icon: ClipboardCheck },
-  { id: 'conv', title: 'Everyday Conversation', desc: 'บทสนทนาและการเลือกคำตอบให้เหมาะสม', tag: 'Conversation', time: '15 นาที', icon: Sparkles }
+  { id: 'vocab', title: 'Vocabulary for Teachers', desc: 'คำศัพท์เกี่ยวกับโรงเรียนและการศึกษา', tag: 'Vocabulary', time: '15 นาที', icon: BookMarked },
+  { id: 'reading-lesson', title: 'Reading Comprehension', desc: 'ฝึกอ่านจับใจความและหาความหมายจากบริบท', tag: 'Reading', time: '20 นาที', icon: BookMarked },
+  { id: 'conv', title: 'Everyday Conversation', desc: 'บทสนทนาและการเลือกคำตอบให้เหมาะสม', tag: 'Conversation', time: '15 นาที', icon: BookMarked }
 ]
 
 const readingStories = [
@@ -90,10 +92,10 @@ const readingStories = [
     image: '/images/reading-kitten-manga.png',
     passage: [
       'Tom is a kind and caring boy who lives near a green park. One rainy afternoon, as he was walking home from school, he heard a faint crying sound near a big tree.',
-      'He checked behind the bushes and found a little kitten. The poor kitten was hurt, cold, and shivering in the rain. Tom immediately wrapped the kitten in his jacket and ran to the nearby animal hospital.',
-      'The veterinarian examined the kitten, gave it medicine, and said, "You came just in time! You are a truly good boy. Animals need kind people like you." Tom smiled happily and decided to adopt the kitten, naming it Lucky.'
+      'He checked behind the bushes and found a little kitten. The poor kitten was hurt, cold, and shivering in the rain. Tom immediately wrapped the kitten in his jacket and ran to the nearby animal clinic.',
+      'The veterinarian examined the kitten, gave it medicine, and said, "You came just in time! You are a truly good boy. Animals need kind people like you." Tom smiled happily and decided to adopt the kitten and take good care of it.'
     ],
-    summary: 'ทอมเป็นเด็กใจดี พบลูกแมวบาดเจ็บและตากฝนอยู่ใต้ต้นไม้ จึงรีบใช้เสื้อแจ็คเก็ตห่อตัวและพาไปโรงพยาบาลสัตว์ สัตวแพทย์ได้รักษาและเอ่ยชมทอม สุดท้ายทอมรับเลี้ยงลูกแมวและตั้งชื่อให้มันว่า "ลักกี้"',
+    summary: 'ทอมเป็นเด็กใจดี พบลูกแมวบาดเจ็บและตากฝนอยู่ใต้ต้นไม้ จึงรีบช่วยและรับเลี้ยงมันไว้',
     vocab: [
       { word: 'kind', meaning: 'ใจดี / มีน้ำใจ' },
       { word: 'faint', meaning: 'แผ่วเบา (เสียง)' },
@@ -132,7 +134,7 @@ const readingStories = [
         q: '3. What does the word "immediately" mean in the text?',
         options: ['Very slowly', 'Right away without delay', 'Carefully', 'Secretly'],
         answer: 1,
-        why: 'immediately หมายถึง ในทันทีทันใด โดยไม่รอช้า (Right away without delay)'
+        why: 'immediately หมายถึง ในทันทีทันใด โดยไม่รอช้า'
       },
       {
         id: 'r1_4',
@@ -144,7 +146,7 @@ const readingStories = [
           'Tom sold the kitten to his friend.'
         ],
         answer: 2,
-        why: 'ตอนจบของเรื่องระบุว่า Tom ตัดสินใจรับเลี้ยงลูกแมวและตั้งชื่อให้ว่า Lucky'
+        why: 'ตอนจบของเรื่องระบุว่า Tom ตัดสินใจรับเลี้ยงลูกแมวและตั้งชื่อให้มัน'
       }
     ]
   }
@@ -160,6 +162,49 @@ function App() {
   const [completed, setCompleted] = useState(() => Number(localStorage.getItem('eem-completed') || 0))
   const [search, setSearch] = useState('')
   const [filter, setFilter] = useState('ทั้งหมด')
+  const [userId, setUserId] = useState(null)
+
+  useEffect(() => {
+    if (!supabase) return
+
+    let active = true
+    const syncUser = async () => {
+      try {
+        const { data: { user } } = await supabase.auth.getUser()
+        if (active) setUserId(user?.id ?? null)
+      } catch {
+        if (active) setUserId(null)
+      }
+    }
+
+    syncUser()
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (active) setUserId(session?.user?.id ?? null)
+    })
+
+    return () => {
+      active = false
+      subscription.unsubscribe()
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!userId) return
+
+    let active = true
+    getMyProgress().then((snapshot) => {
+      if (!active || !snapshot) return
+      const restoredCompleted = Number(snapshot.completed_sets || 0)
+      const restoredProgress = Number(snapshot.progress_percent || 0)
+      setCompleted(restoredCompleted)
+      localStorage.setItem('eem-completed', String(restoredCompleted))
+      localStorage.setItem('eem-progress', String(restoredProgress))
+    }).catch((error) => {
+      console.warn('Unable to hydrate progress from Supabase:', error)
+    })
+
+    return () => { active = false }
+  }, [userId])
 
   const [activeStoryId, setActiveStoryId] = useState('story-1')
   const [readingAnswers, setReadingAnswers] = useState({})
@@ -179,15 +224,25 @@ function App() {
   function startQuiz() {
     setQuizIndex(0); setSelected({}); setSubmitted(false); setPage('practice')
   }
+
   function finishQuiz() {
     setSubmitted(true)
-    const done = completed + 1
-    setCompleted(done)
-    localStorage.setItem('eem-completed', String(done))
+    const nextCompleted = completed + 1
+    setCompleted(nextCompleted)
+    localStorage.setItem('eem-completed', String(nextCompleted))
+
+    if (userId) {
+      const nextProgress = Math.min(100, Math.round((nextCompleted / 8) * 100))
+      saveMyProgress({ completedSets: nextCompleted, progressPercent: nextProgress }).catch((error) => {
+        console.warn('Unable to sync progress to Supabase:', error)
+      })
+    }
   }
+
   function resetQuiz() {
     setQuizIndex(0); setSelected({}); setSubmitted(false)
   }
+
   const current = questions[quizIndex]
   const filteredLessons = lessons.filter(l =>
     (filter === 'ทั้งหมด' || l.tag === filter) &&
@@ -198,30 +253,23 @@ function App() {
     return <aside className={`sidebar ${mobileOpen ? 'open' : ''}`}>
       <div className="brand"><div className="brand-icon"><GraduationCap size={24}/></div><div><b>ENGLISH EXAM</b><span>MASTER · TEACHER</span></div></div>
       <div className="nav-label">เมนูหลัก</div>
-      <nav>{navItems.map(([id, label, Icon]) => <button key={id} className={`nav-item ${page === id || (page === 'lesson' && id === 'lessons') ? 'active' : ''}`} onClick={() => {setPage(id);setMobileOpen(false)}}><Icon size={18}/><span>{label}</span>{id === 'practice' && <i>ใหม่</i>}</button>)}</nav>
-      <div className="sidebar-bottom"><div className="goal-card"><Target size={19}/><b>เป้าหมายของคุณ</b><p>ฝึกวันละ 30 นาที เพื่อเพิ่มความมั่นใจก่อนสอบ</p><div className="goal-line"><span/></div><small>เริ่มต้นสร้างวินัยวันนี้</small></div><button className="nav-item"><Settings size={18}/> ตั้งค่า</button></div>
+      <nav>{navItems.map(([id, label, Icon]) => <button key={id} className={`nav-item ${page === id || (page === 'lesson' && id === 'lessons') ? 'active' : ''}`} onClick={() => {setPage(id);setMobileOpen(false)}}><Icon size={16}/>{label}</button>)}</nav>
+      <div className="sidebar-bottom"><div className="goal-card"><Target size={19}/><b>เป้าหมายของคุณ</b><p>ฝึกวันละ 30 นาที เพื่อเริ่มเก็บคะแนนให้ดีขึ้น</p></div></div>
     </aside>
   }
 
   function Header() {
-    return <header className="topbar"><button className="mobile-menu icon-btn" onClick={() => setMobileOpen(!mobileOpen)}><Menu/></button><div className="crumb">เตรียมสอบครูผู้ช่วย <ChevronRight size={15}/> <b>{navItems.find(n => n[0] === page)?.[1] || (page === 'lesson' ? 'รายละเอียดบทเรียน' : 'ฝึกทำข้อสอบ')}</b></div><div className="top-right"><span className="streak"><Sparkles size={16}/> Keep learning</span><div className="avatar">T</div></div></header>
+    return <header className="topbar"><button className="mobile-menu icon-btn" onClick={() => setMobileOpen(!mobileOpen)}><Menu/></button><div className="crumb">เตรียมสอบครูผู้ช่วย</div><div className="header-actions"><button className="icon-btn"><Search size={18}/></button><button className="icon-btn"><Settings size={18}/></button></div></header>
   }
 
   function Dashboard() {
-    return <>
-      <section className="welcome">
-        <div><span className="eyebrow">YOUR PERSONAL ENGLISH COACH</span><h1>พร้อมอัปคะแนน<br/><em>ภาษาอังกฤษ</em> แล้วหรือยัง?</h1><p>ฝึกอย่างเป็นระบบ เข้าใจหลักภาษา และทำข้อสอบได้อย่างมั่นใจ</p><button className="primary-btn" onClick={startQuiz}>เริ่มฝึกทำข้อสอบ <ChevronRight size={17}/></button></div>
-        <div className="welcome-art"><div
-             function Dashboard() {
     return <>
       <section className="welcome">
         <div>
           <span className="eyebrow">YOUR PERSONAL ENGLISH COACH</span>
           <h1>พร้อมอัปคะแนน<br/><em>ภาษาอังกฤษ</em> แล้วหรือยัง?</h1>
           <p>ฝึกอย่างเป็นระบบ เข้าใจหลักภาษา และทำข้อสอบได้อย่างมั่นใจ</p>
-          <button className="primary-btn" onClick={startQuiz}>
-            เริ่มฝึกทำข้อสอบ <ChevronRight size={17}/>
-          </button>
+          <button className="primary-btn" onClick={startQuiz}>เริ่มฝึกทำข้อสอบ <ChevronRight size={17}/></button>
         </div>
         <div className="welcome-art">
           <div className="art-card">
@@ -233,8 +281,7 @@ function App() {
           </div>
         </div>
       </section>
-      
-      {/* ส่วนสถิติและเมนูด่วนด้านล่าง */}
+
       <div className="stats-grid">
         <div className="stat-card">
           <Clock3 size={20} />
@@ -253,4 +300,8 @@ function App() {
       </div>
     </>
   }
-                            
+
+  return <div className="app-shell"><Sidebar /><main className="main-panel"><Header />{page === 'dashboard' && <Dashboard />}{page === 'practice' && <section className="quiz-panel">{current && <div className="question-card"><div className="question-header"><span>ข้อที่ {quizIndex + 1}</span><span>{current.topic}</span></div><h3>{current.question}</h3><div className="options-grid">{current.options.map((option, index) => <button key={index} className={`option-btn ${selected[current.id] === index ? 'selected' : ''}`} onClick={() => setSelected(prev => ({ ...prev, [current.id]: index }))}>{String.fromCharCode(65 + index)}. {option}</button>)}</div>{submitted && <div className="explanation-box"><h4>คำอธิบาย</h4><p>{current.explanation}</p><p className='tip'>{current.tip}</p></div>}<div className="quiz-actions"><button className="ghost-btn" onClick={() => setQuizIndex((i) => Math.max(0, i - 1))}>ก่อนหน้า</button><button className="primary-btn" onClick={() => { if (quizIndex < questions.length - 1) { setQuizIndex(i => i + 1) } else { finishQuiz() } }}>{quizIndex < questions.length - 1 ? 'ต่อไป' : 'ส่งคำตอบ'}</button></div></div>}</section>}{page === 'lessons' && <section className="panel-card"><h2>บทเรียน</h2><div className="cards-grid">{filteredLessons.map((lesson) => <button key={lesson.id} className="lesson-card" onClick={() => { setSelectedLessonId(lesson.id); setPage('dashboard') }}><div className="lesson-tag">{lesson.tag}</div><h3>{lesson.title}</h3><p>{lesson.desc}</p><div className="lesson-meta"><span>{lesson.time}</span><span>{lesson.icon ? 'พร้อมใช้งาน' : 'เรียนรู้'}</span></div></button>)}</div></section>}{page === 'reading' && <section className="panel-card"><h2>Reading Manga</h2><div className="story-header"><select value={activeStoryId} onChange={(e) => setActiveStoryId(e.target.value)}>{readingStories.map((story) => <option key={story.id} value={story.id}>{story.title}</option>)}</select></div><div className="story-grid"><div className="story-cover"><img src={activeStory.image} alt={activeStory.title} /></div><div className="story-meta"><h3>{activeStory.title}</h3><p>{activeStory.summary}</p><div className="vocab-list">{activeStory.vocab.map((item) => <div key={item.word}><b>{item.word}</b> — {item.meaning}</div>)}</div></div></div><div className="question-stack">{activeStory.questions.map((q) => <div key={q.id} className="read-q"><h4>{q.q}</h4>{q.options.map((option, index) => <button key={index} className={`read-option ${readingAnswers[q.id] === index ? 'selected' : ''}`} onClick={() => setReadingAnswers(prev => ({ ...prev, [q.id]: index }))}>{option}</button>)}{readingSubmitted && <div className="read-expl"><strong>คำอธิบาย:</strong> {q.why}</div>}</div>)}</div>{!readingSubmitted && <button className="primary-btn" onClick={() => setReadingSubmitted(true)}>ตรวจคำตอบ</button>}</section>}{page === 'progress' && <section className="panel-card"><h2>ความก้าวหน้า</h2><div className="progress-box"><div className="progress-head"><span>ความคืบหน้า</span><strong>{Math.min(100, Math.round((completed / 8) * 100))}%</strong></div><div className="progress-bar"><span style={{ width: `${Math.min(100, Math.round((completed / 8) * 100))}%` }} /></div></div></section>}</main></div>
+}
+
+export default App
