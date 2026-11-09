@@ -1,0 +1,27 @@
+/* After authentication, show the original exam dashboard directly. */
+html, body, #root { width: 100%; min-height: 100%; margin: 0; }
+.exam-app-shell { position: fixed; inset: 0; width: 100vw; height: 100dvh; overflow: hidden; background: #f4f7fc; }
+.exam-app-frame { display: block; width: 100%; height: 100%; border: 0; background: #f4f7fc; }
+.exam-session-control {
+  position: fixed;
+  z-index: 20;
+  top: 10px;
+  right: 76px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 8px 6px 12px;
+  border: 1px solid rgba(220,229,240,.9);
+  border-radius: 999px;
+  color: #35506f;
+  background: rgba(255,255,255,.92);
+  box-shadow: 0 3px 14px rgba(24,48,80,.1);
+  font-size: 12px;
+  backdrop-filter: blur(8px);
+}
+.exam-session-control span, .exam-session-control button { display: inline-flex; align-items: center; gap: 6px; }
+.exam-session-control button { border: 0; padding: 5px 8px; border-radius: 999px; color: #254a78; background: #edf3fa; font: inherit; cursor: pointer; }
+@media (max-width: 640px) {
+  .exam-session-control { top: 7px; right: 8px; gap: 4px; padding: 4px 6px 4px 8px; font-size: 10px; }
+  .exam-session-control span { max-width: 115px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+}
