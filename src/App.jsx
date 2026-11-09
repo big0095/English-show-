@@ -1,11 +1,9 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import {
   BookOpen, Brain, ChartNoAxesColumnIncreasing, ClipboardCheck, Clock3,
   GraduationCap, House, Menu, Search, Settings, Target, Trophy, X,
   CheckCircle2, XCircle, ChevronRight, RotateCcw, BookMarked, Sparkles
 } from 'lucide-react'
-import { saveMyProgress, getMyProgress } from './lib/member-data'
-import { supabase } from './lib/supabase'
 
 const questions = [
   {
@@ -162,49 +160,6 @@ function App() {
   const [completed, setCompleted] = useState(() => Number(localStorage.getItem('eem-completed') || 0))
   const [search, setSearch] = useState('')
   const [filter, setFilter] = useState('ทั้งหมด')
-  const [userId, setUserId] = useState(null)
-
-  useEffect(() => {
-    if (!supabase) return
-
-    let active = true
-    const syncUser = async () => {
-      try {
-        const { data: { user } } = await supabase.auth.getUser()
-        if (active) setUserId(user?.id ?? null)
-      } catch {
-        if (active) setUserId(null)
-      }
-    }
-
-    syncUser()
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      if (active) setUserId(session?.user?.id ?? null)
-    })
-
-    return () => {
-      active = false
-      subscription.unsubscribe()
-    }
-  }, [])
-
-  useEffect(() => {
-    if (!userId) return
-
-    let active = true
-    getMyProgress().then((snapshot) => {
-      if (!active || !snapshot) return
-      const restoredCompleted = Number(snapshot.completed_sets || 0)
-      const restoredProgress = Number(snapshot.progress_percent || 0)
-      setCompleted(restoredCompleted)
-      localStorage.setItem('eem-completed', String(restoredCompleted))
-      localStorage.setItem('eem-progress', String(restoredProgress))
-    }).catch((error) => {
-      console.warn('Unable to hydrate progress from Supabase:', error)
-    })
-
-    return () => { active = false }
-  }, [userId])
 
   const [activeStoryId, setActiveStoryId] = useState('story-1')
   const [readingAnswers, setReadingAnswers] = useState({})
@@ -230,13 +185,6 @@ function App() {
     const nextCompleted = completed + 1
     setCompleted(nextCompleted)
     localStorage.setItem('eem-completed', String(nextCompleted))
-
-    if (userId) {
-      const nextProgress = Math.min(100, Math.round((nextCompleted / 8) * 100))
-      saveMyProgress({ completedSets: nextCompleted, progressPercent: nextProgress }).catch((error) => {
-        console.warn('Unable to sync progress to Supabase:', error)
-      })
-    }
   }
 
   function resetQuiz() {
