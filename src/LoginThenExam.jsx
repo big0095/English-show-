@@ -13,7 +13,7 @@ export default function LoginThenExam() {
   const [notice, setNotice] = useState('')
   const [loading, setLoading] = useState(false)
   const status = getSupabaseConfigStatus()
-  const examUrl = `${import.meta.env.BASE_URL}english-exam-master.html`
+  const examUrl = `${import.meta.env.BASE_URL}exam-academy.html`
 
   useEffect(() => {
     if (!supabase) {
