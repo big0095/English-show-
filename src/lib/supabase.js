@@ -1,7 +1,7 @@
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://fbhhamxwtvvfohgitkjj.supabase.co'
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL?.trim()
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY?.trim()
 
 export const isSupabaseConfigured = Boolean(supabaseUrl && supabaseAnonKey)
 export const supabase = isSupabaseConfigured
@@ -15,15 +15,19 @@ export const supabase = isSupabaseConfigured
   : null
 
 export function getSupabaseConfigStatus() {
-  if (!supabaseAnonKey) {
+  if (!supabaseUrl) {
     return {
       configured: false,
-      message: 'Missing VITE_SUPABASE_ANON_KEY. Add the browser-safe anon key from your Supabase project. Do not use the service-role key in the frontend.'
+      message: 'Missing VITE_SUPABASE_URL. Set the Supabase Project URL in your local or deployment environment.'
     }
   }
 
-  return {
-    configured: true,
-    message: 'Supabase is configured and ready.'
+  if (!supabaseAnonKey) {
+    return {
+      configured: false,
+      message: 'Missing VITE_SUPABASE_ANON_KEY. Set the browser-safe publishable/anon key. Never use a secret or service-role key in the frontend.'
+    }
   }
+
+  return { configured: true, message: 'Supabase client is configured.' }
 }
