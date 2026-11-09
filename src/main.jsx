@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import AppWithAuth from './AppWithAuth.jsx'
 import './style.css'
 import './auth.css'
+import './polish.css'
 
 createRoot(document.getElementById('root')).render(
   <React.StrictMode><AppWithAuth /></React.StrictMode>

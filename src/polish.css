@@ -1,0 +1,96 @@
+/* Layout polish for the authenticated learning dashboard. */
+:root {
+  color: #172b4d;
+  background: #f4f7fc;
+  font-family: 'IBM Plex Sans Thai', 'Manrope', sans-serif;
+}
+
+html, body, #root { min-height: 100%; }
+body { background: #f4f7fc; }
+
+/* The sidebar is fixed; reserve its width so it never covers page content. */
+.sidebar {
+  position: fixed;
+  inset: 64px auto 0 0;
+  z-index: 30;
+  width: 250px;
+  height: calc(100vh - 64px);
+  overflow-y: auto;
+  background: rgba(255,255,255,.97);
+  box-shadow: 8px 0 30px rgba(27,52,91,.045);
+}
+
+.main-panel {
+  width: calc(100% - 250px);
+  min-width: 0;
+  min-height: calc(100vh - 64px);
+  margin-left: 250px;
+  background: #f4f7fc;
+}
+
+.session-bar {
+  min-height: 64px;
+  padding: 10px clamp(18px, 3vw, 42px);
+  background: rgba(255,255,255,.94);
+  box-shadow: 0 1px 0 rgba(26,48,82,.08);
+}
+
+.topbar {
+  min-height: 68px;
+  padding-inline: clamp(20px, 4vw, 52px);
+  background: rgba(255,255,255,.82);
+  border-bottom: 1px solid #e8edf5;
+}
+
+.page-content {
+  width: min(100%, 1500px);
+  margin-inline: auto;
+  padding: clamp(22px, 3vw, 42px);
+}
+
+.welcome {
+  min-height: 285px;
+  padding: clamp(30px, 5vw, 64px);
+  border: 1px solid rgba(255,255,255,.22);
+  border-radius: 24px;
+  color: #fff;
+  overflow: hidden;
+  background: radial-gradient(circle at 82% 18%, rgba(116,155,222,.55), transparent 30%),
+    linear-gradient(120deg, #17345c 0%, #245a91 58%, #3977b7 100%);
+  box-shadow: 0 18px 44px rgba(31,74,124,.18);
+}
+
+.welcome h1 { max-width: 650px; line-height: 1.35; letter-spacing: -.025em; }
+.welcome p { max-width: 580px; color: rgba(255,255,255,.82); line-height: 1.8; }
+.welcome .eyebrow { color: #f2cf7a; letter-spacing: .12em; }
+.welcome .primary-btn {
+  width: auto;
+  min-height: 48px;
+  padding: 12px 22px;
+  border-radius: 13px;
+  background: linear-gradient(110deg, #f1c96b, #e5a944);
+  color: #193354;
+  box-shadow: 0 8px 20px rgba(9,28,54,.18);
+}
+.welcome .primary-btn:hover { filter: brightness(1.05); transform: translateY(-1px); }
+
+.stats-grid { gap: 18px; margin-top: 20px; }
+.stat-card, .panel, .lesson-card {
+  border: 1px solid #e5ebf4;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 8px 26px rgba(26,54,94,.055);
+}
+.stat-card { min-height: 132px; padding: 24px; }
+.stat-card h3 { margin: 8px 0 0; color: #17365e; font-size: 1.35rem; }
+.stat-card > svg { color: #356cae; }
+
+@media (max-width: 760px) {
+  .sidebar { inset: 64px auto 0 0; width: min(285px, 84vw); transform: translateX(-105%); }
+  .sidebar.open { transform: translateX(0); }
+  .main-panel { width: 100%; margin-left: 0; }
+  .page-content { padding: 20px 16px; }
+  .welcome { min-height: 0; padding: 28px 22px; border-radius: 18px; }
+  .welcome h1 { font-size: clamp(1.7rem, 8vw, 2.4rem); }
+  .stats-grid { grid-template-columns: 1fr; }
+}
