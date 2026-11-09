@@ -8,16 +8,5 @@ const rootDir = dirname(fileURLToPath(import.meta.url))
 
 export default defineConfig({
   plugins: [
-    react(),
-    {
-      name: 'copy-legacy-exam-library',
-      apply: 'build',
-      closeBundle() {
-        copyFileSync(
-          resolve(rootDir, 'english-exam-master.html'),
-          resolve(rootDir, 'dist/english-exam-master.html')
-        )
-      }
-    }
-  ]
+    
 })
