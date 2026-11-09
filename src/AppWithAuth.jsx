@@ -15,6 +15,13 @@ const readLegacy = () => {
   } catch { /* Storage may be disabled; cloud account remains usable. */ }
   return snapshot
 }
+const writeLocalProgress = (userId, completed, progress) => {
+  try {
+    localStorage.setItem('eem-completed', String(completed))
+    localStorage.setItem('eem-progress', String(progress))
+    localStorage.setItem(OWNER_KEY, userId)
+  } catch { /* Cloud remains the source of truth. */ }
+}
 const asNonNegativeInt = (value) => {
   const parsed = Number.parseInt(value, 10)
   return Number.isFinite(parsed) && parsed >= 0 ? parsed : 0
@@ -58,7 +65,6 @@ function AppWithAuth() {
     setError('')
     const metadata = activeUser.user_metadata || {}
 
-    // Preserve user-edited profile values; create a profile only when it is absent.
     const { data: existingProfile, error: profileReadError } = await supabase.from('profiles')
       .select('id').eq('id', activeUser.id).maybeSingle()
     if (profileReadError) throw profileReadError
@@ -77,19 +83,15 @@ function AppWithAuth() {
     if (progressError) throw progressError
 
     if (data) {
-      try {
-        localStorage.setItem('eem-completed', String(data.completed_sets || 0))
-        localStorage.setItem('eem-progress', String(data.progress_percent || 0))
-        localStorage.setItem(OWNER_KEY, activeUser.id)
-      } catch { /* Cloud remains the source of truth. */ }
+      writeLocalProgress(activeUser.id, data.completed_sets || 0, data.progress_percent || 0)
       lastSynced.current = JSON.stringify({ completed: data.completed_sets || 0, progress: data.progress_percent || 0 })
       setMigrationNeeded(false)
     } else {
       const legacy = readLegacy()
       let previousOwner = null
       try { previousOwner = localStorage.getItem(OWNER_KEY) } catch { /* Ignore storage errors. */ }
-      // A local snapshot previously associated with another account must never be offered
-      // as this user's migration data. Only unowned, pre-cloud browser data can be imported.
+      // Never offer another account's browser cache for import. Clear that cache before
+      // mounting the legacy app so its periodic cloud sync cannot copy another user's data.
       const canImportLegacy = !previousOwner || previousOwner === activeUser.id
       const candidate = canImportLegacy ? legacy : {}
       const hasLegacyData = Object.keys(candidate).length > 0
@@ -100,11 +102,7 @@ function AppWithAuth() {
         const { error: insertError } = await supabase.from('student_progress').upsert(initial, { onConflict: 'user_id' })
         if (insertError) throw insertError
         lastSynced.current = JSON.stringify({ completed: 0, progress: 0 })
-        try {
-          localStorage.setItem('eem-completed', '0')
-          localStorage.setItem('eem-progress', '0')
-          localStorage.setItem(OWNER_KEY, activeUser.id)
-        } catch { /* Cloud remains the source of truth. */ }
+        writeLocalProgress(activeUser.id, 0, 0)
       }
     }
     setAccountReady(true)
@@ -163,11 +161,7 @@ function AppWithAuth() {
       if (writeError) throw writeError
       // Retain original browser values as a recoverable backup.
       lastSynced.current = JSON.stringify({ completed, progress })
-      try {
-        localStorage.setItem('eem-completed', String(completed))
-        localStorage.setItem('eem-progress', String(progress))
-        localStorage.setItem(OWNER_KEY, user.id)
-      } catch { /* Ignore unavailable local storage. */ }
+      writeLocalProgress(user.id, completed, progress)
       setMigrationNeeded(false)
     } catch (migrationError) {
       setError(`ย้ายข้อมูลไม่สำเร็จ: ${migrationError.message}`)
